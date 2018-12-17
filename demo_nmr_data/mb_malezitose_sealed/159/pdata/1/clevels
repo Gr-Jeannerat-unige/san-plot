@@ -1,0 +1,28 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 7
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ 2018-10-10 13:02:08.146 +0200  nmr@CZC60678L0
+$$ /opt/topspin3.5pl5/data/brucka/data/nmr/nmr/mb_malezitose_sealed/159/pdata/1/clevels
+$$ process /opt/topspin3.5pl7/prog/mod/edparproc
+##$LEVELS= (0..255)
+-344924.7660288 -191624.870016 -106458.26112 -59143.4784 -32857.488 -18254.16
+-10141.2 -5634 5634 10141.2 18254.16 32857.488 59143.4784 106458.26112
+191624.870016 344924.7660288 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0
+##$LEVSIGN= 3
+##$MAXLEV= 8
+##$METHOD= 0
+##$NEGBASE= -5634
+##$NEGINCR= 1.8
+##$POSBASE= 5634
+##$POSINCR= 1.8
+##END=

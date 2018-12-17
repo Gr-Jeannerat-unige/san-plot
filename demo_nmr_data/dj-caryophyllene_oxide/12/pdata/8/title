@@ -1,0 +1,5 @@
+MP_DEPT135 CDCl3 /opt/topspin3.5pl5/data/jeannerat nmr 12
+NS=128
+lb -0.01 gm 0.5
+gm ft
+seen proc 6 for commands

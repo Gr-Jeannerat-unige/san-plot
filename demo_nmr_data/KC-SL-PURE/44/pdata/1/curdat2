@@ -1,0 +1,23 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 7
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 2	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ 2017-11-10 11:09:46.484 +0100  nmr@CZC60678L0
+$$ /opt/topspin3.5pl5/data/cougnon/data/nmr/nmr/KC-SL-PURE/44/pdata/1/curdat2
+$$ process /opt/topspin3.5pl7/prog/mod/dataserver
+##$DATPATH2= </opt/topspin3.5pl5/data/cougnon/data/nmr/nmr>
+##$DATPATH3= </opt/topspin3.5pl5/data/cougnon/data/nmr/nmr>
+##$DU2= <>
+##$DU3= <>
+##$EXPNO2= 43
+##$EXPNO3= 43
+##$NAME2= <KC-SL-PURE>
+##$NAME3= <KC-SL-PURE>
+##$PROCNO2= 1
+##$PROCNO3= 1
+##$TYPE= <>
+##$USER2= <>
+##$USER3= <>
+##END=

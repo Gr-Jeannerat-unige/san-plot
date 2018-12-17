@@ -1,0 +1,23 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 7
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 2	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ 2017-11-09 10:05:50.266 +0100  nmr@CZC60678L0
+$$ /opt/topspin3.5pl5/data/cougnon/data/nmr/nmr/KC-SL-PURE/39/acqu2
+$$ process /opt/topspin3.5pl7/prog/mod/dataserver
+##$ACQT0= 0
+##$BF1= 500.13
+##$FnMODE= 5
+##$NUC1= <1H>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 0
+##$O1= 3728.46915001901
+##$ProjAngle= 0
+##$SFO1= 500.13372846915
+##$SW= 7.497979343164
+##$SW_h= 3749.99236488128
+##$TD= 256
+##END=

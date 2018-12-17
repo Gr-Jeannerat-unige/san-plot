@@ -1,0 +1,59 @@
+##TITLE= Audit trail, TOPSPIN		Version 3.2
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= jeannerat
+$$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/dj-caryophyllene_oxide/12/pdata/6/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2017-05-18 05:55:04.084 +0200>,<nmr>,<CZC60678L0>,<go4>,<TopSpin 3.5.5>,
+      <created by zg
+	started at 2017-05-18 05:50:19.503 +0200,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       9E 1E 6D 2E E9 80 23 52 88 DF 68 E6 7A 8A 14 7E
+       data hash MD5: 64K
+       57 C3 4F D1 88 24 B4 29 DB C8 2A 9C 7F C4 A2 E7>)
+(   2,<2017-05-18 05:55:04.116 +0200>,<nmr>,<CZC60678L0>,<audit>,<TopSpin 3.5.5>,
+      <user comment:
+       ICON-NMR User ID: nmr
+       data hash MD5: 64K
+       57 C3 4F D1 88 24 B4 29 DB C8 2A 9C 7F C4 A2 E7>)
+(   3,<2018-03-01 13:16:21.590 +0100>,<jeannerat>,<djpro.local>,<proc1d>,<TOPSPIN 3.2>,
+      <Start of raw data processing
+       sinm SSB = 2 SI = 64K 
+       data hash MD5: 64K
+       D1 3F 7F 1E E6 08 91 9E B6 5B 41 47 14 BD 91 DF>)
+(   4,<2018-03-01 13:16:26.255 +0100>,<jeannerat>,<djpro.local>,<proc1d>,<TOPSPIN 3.2>,
+      <ft FT_mod = 6 PKNL = 1 SI = 64K 
+       data hash MD5: 64K
+       74 F3 A8 5D CE 01 4B F7 53 42 5A E1 17 88 C8 7A>)
+(   5,<2018-03-01 13:16:43.296 +0100>,<jeannerat>,<djpro.local>,<proc1d>,<TOPSPIN 3.2>,
+      <pk PHC0 = 235.6028 PHC1 = -271.3578 
+       data hash MD5: 64K
+       FF 21 59 5F 4A B0 DE 26 B6 64 B2 5B AB 7D 50 E1>)
+(   6,<2018-03-01 13:17:34.680 +0100>,<jeannerat>,<djpro.local>,<audit>,<TOPSPIN 3.2>,
+      <user comment:
+       TITLE=MP_DEPT135 CDCl3 /opt/topspin3.5pl5/data/jeannerat nmr 12
+       NS=128
+       wm + ft + pkTITLE_END
+       data hash MD5: 64K
+       FF 21 59 5F 4A B0 DE 26 B6 64 B2 5B AB 7D 50 E1>)
+(   7,<2018-03-02 14:56:11.110 +0100>,<jeannerat>,<djpro.local>,<audit>,<TOPSPIN 3.2>,
+      <user comment:
+       TITLE=MP_DEPT135 CDCl3 /opt/topspin3.5pl5/data/jeannerat nmr 12
+       NS=128
+       sine shifter
+       wm + ft + pkTITLE_END
+       data hash MD5: 64K
+       FF 21 59 5F 4A B0 DE 26 B6 64 B2 5B AB 7D 50 E1>)
+(   8,<2018-03-02 14:56:11.857 +0100>,<jeannerat>,<djpro.local>,<audit>,<TOPSPIN 3.2>,
+      <user comment:
+       TITLE=MP_DEPT135 CDCl3 /opt/topspin3.5pl5/data/jeannerat nmr 12
+       NS=128
+       sine shifter
+       wm + ft + pkTITLE_END
+       data hash MD5: 64K
+       FF 21 59 5F 4A B0 DE 26 B6 64 B2 5B AB 7D 50 E1>)
+##END=
+
+$$ hash MD5
+$$ 6B BD D7 73 EA B0 62 F9 A7 63 3E 49 52 33 65 F8

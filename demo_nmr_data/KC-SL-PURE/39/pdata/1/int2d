@@ -1,0 +1,17 @@
+
+ Current data set:
+ Name =     KC-SL-PURE   ExpNo =    39   ProcNo =     1
+ Disk  = /opt/topspin3.5pl5/data/cougnon/data/nmr/nmr
+ Baseline = 0    Noise = 0
+
+   #  SI_F1  row1  row2  row1(ppm)  row2(ppm)  abs. Int.    Integral    Mode
+      SI_F2  col1  col2  col1(ppm)  col2(ppm)
+
+  1   1024    34    45   10.96466   10.88462  5.9237e+06     5.6493   a
+      1024    33    44   10.96801   10.88635
+  2   1024   270   280    9.23694    9.16510  6.5465e+06     6.2432   a
+      1024   270   279    9.23507    9.16794
+  3   1024   264   283    9.28228    9.13752       99983   0.095351   a
+      1024    34    43   10.96045   10.89331
+  4   1024    30    51   10.99050   10.83995       83358   0.079496   a
+      1024   267   280    9.25773    9.16261

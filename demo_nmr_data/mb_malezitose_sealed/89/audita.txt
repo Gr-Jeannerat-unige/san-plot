@@ -1,0 +1,18 @@
+##TITLE= Audit trail, TopSpin 3.5 pl 7
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ /opt/topspin3.5pl5/data/brucka/data/nmr/nmr/mb_malezitose_sealed/89/audita.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2017-10-20 11:08:22.944 +0200>,<nmr>,<CZC60678L0>,<go4>,<TopSpin 3.5.7>,
+      <created by zg
+	started at 2017-10-20 10:42:53.485 +0200,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       16 24 81 54 1A C4 54 87 FE 19 5E C7 D7 52 3B 2B
+       data hash MD5: 2K * 256
+       2C C7 D2 EB 38 B5 10 8E 6A A6 2C EA C8 BD 48 93>)
+##END=
+
+$$ hash MD5
+$$ 79 AC B7 CA 1A 8D 88 CA B5 AC 00 31 1C 1E 5F 75

@@ -1,0 +1,5 @@
+   Current data set:
+   NAME =	test	EXPNO =	10	PROCNO = 1
+   DU   =	/opt/topspin3.5pl5/data/marion/data/nmr/nmr
+
+   Number   Integrated Region     Integral

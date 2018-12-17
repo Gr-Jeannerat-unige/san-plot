@@ -1,0 +1,102 @@
+##TITLE= Audit trail, TOPSPIN		Version 3.2
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= jeannerat
+$$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/dj-caryophyllene_oxide/10/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2017-05-18 05:40:09.404 +0200>,<nmr>,<CZC60678L0>,<go4>,<TopSpin 3.5.5>,
+      <created by zg
+	started at 2017-05-18 05:38:26.130 +0200,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       9E 1E 6D 2E E9 80 23 52 88 DF 68 E6 7A 8A 14 7E
+       data hash MD5: 64K
+       CE 5A 05 D3 08 E2 AE 65 19 78 12 96 63 45 0F B0>)
+(   2,<2017-05-18 05:40:09.436 +0200>,<nmr>,<CZC60678L0>,<audit>,<TopSpin 3.5.5>,
+      <user comment:
+       ICON-NMR User ID: nmr
+       data hash MD5: 64K
+       CE 5A 05 D3 08 E2 AE 65 19 78 12 96 63 45 0F B0>)
+(   3,<2018-02-27 14:58:26.687 +0100>,<jeannerat>,<djpro.local>,<proc1d>,<TOPSPIN 3.2>,
+      <Start of raw data processing
+       efp LB = 0.3 FT_mod = 6 PKNL = 1 PHC0 = 92 PHC1 = -67.48909 SI = 64K 
+       data hash MD5: 64K
+       90 6C 63 81 4C 8C 8E CD 4B 06 19 71 AE B6 24 D3>)
+(   4,<2018-02-27 14:58:27.686 +0100>,<jeannerat>,<djpro.local>,<proc1d>,<TOPSPIN 3.2>,
+      <abs ABSG = 5 
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(   5,<2018-07-13 16:05:46.009 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:05:43.409 +0200
+       DELETE_ALL
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(   6,<2018-07-13 16:08:38.993 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:08.989 +0200
+       DEFINE [2.990;2.831]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(   7,<2018-07-13 16:08:38.994 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:10.877 +0200
+       DEFINE [2.738;2.583]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(   8,<2018-07-13 16:08:38.995 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:13.203 +0200
+       DEFINE [2.477;2.327]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(   9,<2018-07-13 16:08:38.996 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:14.599 +0200
+       DEFINE [2.327;2.228]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  10,<2018-07-13 16:08:38.997 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:15.757 +0200
+       DEFINE [2.231;2.072]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  11,<2018-07-13 16:08:38.999 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:17.961 +0200
+       DEFINE [1.843;1.747]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  12,<2018-07-13 16:08:39.000 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:19.605 +0200
+       DEFINE [1.744;1.571]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  13,<2018-07-13 16:08:39.002 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:21.863 +0200
+       DEFINE [1.545;1.396]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  14,<2018-07-13 16:08:39.003 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:23.319 +0200
+       DEFINE [1.399;1.276]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  15,<2018-07-13 16:08:39.004 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:24.939 +0200
+       DEFINE [1.266;1.174]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  16,<2018-07-13 16:08:39.006 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:27.499 +0200
+       DEFINE [1.097;0.832]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  17,<2018-07-13 16:08:39.007 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:29.157 +0200
+       DEFINE [5.046;4.953]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+(  18,<2018-07-13 16:08:39.009 +0200>,<jeannerat>,<djpro.local>,<dataserver>,<TopSpin 4.0.3>,
+      <INTEGRAL 2018-07-13 16:08:31.809 +0200
+       DEFINE [4.946;4.824]
+       data hash MD5: 64K
+       27 ED D3 A3 16 59 DB AB C8 B0 75 03 E1 51 C5 E0>)
+##END=
+
+$$ hash MD5
+$$ 07 2C F1 D6 00 DD 1C 3D C0 A3 04 B3 D2 8A 50 75

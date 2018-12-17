@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PeakList>
+  <PeakList1D>
+    <PeakList1DHeader creator="nmr" date="2016-06-21T14:54:48.123+02:00" expNo="10" name="test" owner="" procNo="1" source="/opt/topspin3.5pl5/data/marion/data/nmr/nmr">
+      <PeakPickDetails>F1=7.298123ppm, F2=7.263405ppm, MI=50.00cm, MAXI=10000.00cm, PC=4.000
+      </PeakPickDetails>
+    </PeakList1DHeader>
+    <Peak1D F1="7.283532" intensity="1.000000e+02" type="0"/>
+  </PeakList1D>
+</PeakList>

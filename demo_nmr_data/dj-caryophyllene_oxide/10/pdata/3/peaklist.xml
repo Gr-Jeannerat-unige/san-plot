@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PeakList>
+  <PeakList1D>
+    <PeakList1DHeader creator="nmr" date="2017-09-29T10:26:08.715+02:00" expNo="10" name="dj-caryophyllene_oxide" owner="" procNo="1" source="/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr">
+      <PeakPickDetails>F1=7.296973ppm, F2=7.258367ppm, MI=50.00cm, MAXI=10000.00cm, PC=4.000
+      </PeakPickDetails>
+    </PeakList1DHeader>
+    <Peak1D F1="7.284205" intensity="1.000000e+02" type="0"/>
+  </PeakList1D>
+</PeakList>

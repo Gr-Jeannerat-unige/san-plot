@@ -1,0 +1,16 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 5
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 2	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ 2016-06-21 14:54:48.370 +0200  nmr@CZC60678L0
+$$ /opt/topspin3.5pl5/data/marion/data/nmr/nmr/test/10/pdata/992/outd
+$$ process /opt/topspin3.5pl5/prog/au/bin/hwcal
+##$CURPLOT= <hpbiz2800>
+##$CURPRIN= <simfit.out>
+##$DFORMAT= <normdp>
+##$LAYOUT= <+/1D_H.xwp>
+##$LFORMAT= <normlp>
+##$PFORMAT= <normpl>
+##END=

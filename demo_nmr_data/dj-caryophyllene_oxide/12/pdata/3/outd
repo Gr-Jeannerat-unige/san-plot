@@ -1,0 +1,16 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.2
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= jeannerat
+$$ 2018-02-27 15:04:55.871 +0100  jeannerat@djpro.local
+$$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/dj-caryophyllene_oxide/12/pdata/3/outd
+$$ process /opt/topspin3.2/prog/mod/dirdata
+##$CURPLOT= <hpbiz2800>
+##$CURPRIN= <$hpbiz2800>
+##$DFORMAT= <normdp>
+##$LAYOUT= <+/1D_X.xwp>
+##$LFORMAT= <normlp>
+##$PFORMAT= <normpl>
+##END=

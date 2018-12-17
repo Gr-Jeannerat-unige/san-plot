@@ -1,0 +1,18 @@
+##TITLE= Audit trail, TopSpin 3.5 pl 7
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ /opt/topspin3.5pl5/data/cougnon/data/nmr/nmr/KC-SL-PURE/39/audita.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2017-11-09 11:46:37.192 +0100>,<nmr>,<CZC60678L0>,<go4>,<TopSpin 3.5.7>,
+      <created by zg
+	started at 2017-11-09 10:05:52.933 +0100,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       16 24 81 54 1A C4 54 87 FE 19 5E C7 D7 52 3B 2B
+       data hash MD5: 4K * 256
+       E3 A5 25 E1 4E 54 D4 94 A4 FA 04 7B 07 3F BF 0E>)
+##END=
+
+$$ hash MD5
+$$ 23 02 F0 82 24 CC DC 71 51 19 B0 55 7D 80 E5 2C

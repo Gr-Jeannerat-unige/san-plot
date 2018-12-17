@@ -1,0 +1,16 @@
+#  Current data set:
+#  Name =     KC-SL-PURE   ExpNo =    44   ProcNo =     1
+#  Disk  = /opt/topspin3.5pl5/data/cougnon/data/nmr/nmr
+#  Baseline = 0    Noise = 0
+
+
+ Region          Integral Normalized Mode
+
+     1        4475900.00       0.69    a
+     2        5076000.00       0.79    a
+     3         206230.00       0.03    a
+     4         197850.00       0.03    a
+     5        6446800.00       1.00    a
+     6        6155500.00       0.95    a
+     7         224220.00       0.03    a
+     8         224130.00       0.03    a

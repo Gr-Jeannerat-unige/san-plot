@@ -1,0 +1,16 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 7
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ 2018-10-10 13:03:03.891 +0200  nmr@CZC60678L0
+$$ /opt/topspin3.5pl5/data/brucka/data/nmr/nmr/mb_malezitose_sealed/161/pdata/1/outd
+$$ process /opt/topspin3.5pl7/prog/mod/edparproc
+##$CURPLOT= <hpbiz2800>
+##$CURPRIN= <$hpbiz2800>
+##$DFORMAT= <normdp>
+##$LAYOUT= <+/1D_H.xwp>
+##$LFORMAT= <normlp>
+##$PFORMAT= <normpl>
+##END=

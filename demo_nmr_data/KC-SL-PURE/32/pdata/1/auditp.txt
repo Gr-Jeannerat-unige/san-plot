@@ -1,0 +1,23 @@
+##TITLE= Audit trail, TopSpin 4.0.3
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= jeannerat
+$$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/cougnon/data/nmr/nmr/KC-SL-PURE/32/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2017-11-08 10:37:22.804 +0100>,<nmr>,<CZC60678L0>,<go4>,<TopSpin 3.5.7>,
+      <created by zg
+	started at 2017-11-08 08:56:36.358 +0100,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       16 24 81 54 1A C4 54 87 FE 19 5E C7 D7 52 3B 2B
+       data hash MD5: 4K * 256
+       A1 8F C3 14 FE 17 51 E3 1F FF 59 EE C8 99 28 5B>)
+(   2,<2018-11-23 07:53:40.657 +0100>,<jeannerat>,<djmini2018.local>,<proc2d>,<TopSpin 4.0.3>,
+      <Start of raw data processing
+       xfb n F2: SI = 2K WDW = 4 SSB = 2 FT_mod = 6 PKNL = 1 PHC0 = 217.8961 PHC1 = -25.17018 F1: SI = 512 WDW = 4 SSB = 2 FT_mod = 4 FCOR = 1 PHC0 = 90 PHC1 = -180
+       data hash MD5: 2K * 512
+       01 DF FB 89 DA FF 21 C4 89 F7 00 E1 04 9B 13 B6>)
+##END=
+
+$$ hash MD5
+$$ 72 94 4B 32 81 93 B2 FF CB 62 3A 49 6A B2 B0 7A

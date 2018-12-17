@@ -1,0 +1,50 @@
+
+Current Data Parameters
+NAME     MP-caryophyllene_oxide              
+EXPNO                12              
+PROCNO                1              
+
+F2 - Acquisition Parameters
+Date_          20170518              
+Time               5.55 h            
+INSTRUM           spect              
+PROBHD   Z119248_0001 (              
+PULPROG         dept135              
+TD                65536              
+SOLVENT           CDCl3              
+NS                  128              
+DS                    4              
+SWH           29761.904 Hz           
+FIDRES         0.908261 Hz           
+AQ            1.1010048 sec          
+RG                  203              
+DW               16.800 usec         
+DE                18.00 usec         
+TE                298.0 K            
+CNST2       145.0000000              
+D1           1.00000000 sec          
+D2           0.00344828 sec          
+D12          0.00002000 sec          
+TD0                   1              
+SFO1        125.7703638 MHz          
+NUC1                13C              
+P1                10.20 usec         
+P2                20.40 usec         
+PLW1        32.00000000 W            
+SFO2        500.1320005 MHz          
+NUC2                 1H              
+CPDPRG[2        waltz16              
+P3                10.30 usec         
+P4                20.60 usec         
+PCPD2             80.00 usec         
+PLW2        14.00000000 W            
+PLW12        0.23207000 W            
+
+F2 - Processing parameters
+SI                32768              
+SF          125.7577885 MHz          
+WDW                  EM              
+SSB      0              
+LB                 1.00 Hz           
+GB       0              
+PC                 1.40              

@@ -1,0 +1,27 @@
+##TITLE= Audit trail, TopSpin 4.0.3
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= jeannerat
+$$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/brucka/data/nmr/nmr/mb_malezitose_sealed/161/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2018-10-10 18:06:06.740 +0200>,<nmr>,<CZC60678L0>,<go4>,<TopSpin 3.5.7>,
+      <created by zg
+	started at 2018-10-10 15:43:49.183 +0200,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       B2 E1 2D 35 8A 85 A4 16 4A 04 47 58 07 E4 B6 8A
+       data hash MD5: 4K * 1K
+       A7 6E 74 39 F6 26 20 94 FA C4 8F 23 02 59 CF F8>)
+(   2,<2018-11-22 10:11:10.503 +0100>,<jeannerat>,<djmini2018.local>,<proc2d>,<TopSpin 4.0.3>,
+      <Start of raw data processing
+       xfb F2: SI = 16K WDW = 1 LB = 0.3 FT_mod = 6 PKNL = 1 PHC0 = 124.168 PHC1 = -30.4 F1: SI = 1K FT_mod = 4 FCOR = 0.5 PHC0 = 180 PHC1 = 0
+       data hash MD5: 16K * 1K
+       05 FD 52 30 F8 71 DE C4 33 4A 33 75 E0 14 8B DE>)
+(   3,<2018-11-22 10:11:43.799 +0100>,<jeannerat>,<djmini2018.local>,<proc2d>,<TopSpin 4.0.3>,
+      <pk2 fgphup F2: PHC0 = 107.2237 PHC1 = 1.6
+       data hash MD5: 16K * 1K
+       71 95 D4 7A D0 18 F8 0B E5 1C 83 F2 0F F2 1A 4D>)
+##END=
+
+$$ hash MD5
+$$ C5 F0 75 78 7A B4 90 65 23 17 F5 C3 0A 5C 20 07
