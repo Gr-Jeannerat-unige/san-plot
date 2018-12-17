@@ -1,0 +1,11 @@
+##TITLE= Parameter file, TopSpin 4.0.3
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= jeannerat
+$$ 2018-12-10 15:33:36.495 +0100  jeannerat@djmini2018.local
+$$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/brucka/data/nmr/nmr/mb_malezitose_sealed/161/pdata/1/assocs
+$$ process /opt/topspin4.0.3/prog/mod/dataserver
+##$MULTDISP= <>
+##END=

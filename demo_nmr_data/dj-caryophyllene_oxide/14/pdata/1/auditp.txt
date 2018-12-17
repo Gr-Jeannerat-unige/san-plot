@@ -1,0 +1,28 @@
+##TITLE= Audit trail, TopSpin 4.0.3
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= jeannerat
+$$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/dj-caryophyllene_oxide/14/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2017-05-18 06:18:17.195 +0200>,<nmr>,<CZC60678L0>,<go4>,<TopSpin 3.5.5>,
+      <created by zg
+	started at 2017-05-18 06:06:53.018 +0200,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       9E 1E 6D 2E E9 80 23 52 88 DF 68 E6 7A 8A 14 7E
+       data hash MD5: 2K * 256
+       01 8C 40 F6 B9 1E A8 F6 C4 19 69 3E 5B 67 28 F0>)
+(   2,<2017-05-18 06:18:17.232 +0200>,<nmr>,<CZC60678L0>,<audit>,<TopSpin 3.5.5>,
+      <user comment:
+       ICON-NMR User ID: nmr
+       data hash MD5: 2K * 256
+       01 8C 40 F6 B9 1E A8 F6 C4 19 69 3E 5B 67 28 F0>)
+(   3,<2018-06-25 15:51:16.729 +0200>,<jeannerat>,<djpro.local>,<proc2d>,<TopSpin 4.0.3>,
+      <Start of raw data processing
+       xfb n F2: SI = 2K WDW = 4 SSB = 2 FT_mod = 6 PKNL = 1 PHC0 = -66.15382 PHC1 = 3.197195 F1: SI = 1K WDW = 4 SSB = 2 FT_mod = 6 FCOR = 0.5
+       data hash MD5: 2K * 1K
+       26 1A 81 7B 25 F6 11 4A 57 E0 AB D6 CA 25 F8 46>)
+##END=
+
+$$ hash MD5
+$$ 80 E3 A2 A5 12 8C EC 55 6E 5F 2F 0D 37 1D 93 5F

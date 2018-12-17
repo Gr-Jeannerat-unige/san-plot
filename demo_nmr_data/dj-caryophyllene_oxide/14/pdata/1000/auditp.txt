@@ -1,0 +1,109 @@
+##TITLE= Audit trail, TopSpin 3.5 pl 5
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ /opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr/MP-caryophyllene_oxide/14/pdata/1000/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2017-05-18 06:18:18.189 +0200>,<nmr>,<CZC60678L0>,<mvrow>,<TopSpin 3.5.5>,
+      <rsr 396 from
+       1 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       3C 90 87 C0 1D A6 ED 7B 84 88 F9 55 38 8F 6D DA>)
+(   2,<2017-05-18 06:18:18.198 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       B2 36 0F 46 FA 40 88 66 43 AA D5 81 9D 08 BE 9E>)
+(   3,<2017-05-18 06:18:18.204 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       4E C6 D4 34 B3 A4 CF A6 43 8D 70 0B 85 F5 AE 70>)
+(   4,<2017-05-18 06:18:18.210 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       1D 88 5F 99 BF FE 7D 40 8E DC 3D 61 D5 FE 5D ED>)
+(   5,<2017-05-18 06:18:18.216 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       B8 7E 07 6D 11 3B 63 D3 5F AD A6 92 43 C2 D5 83>)
+(   6,<2017-05-18 06:18:18.221 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       B9 30 45 21 98 43 30 CA DA B2 CA D4 56 21 18 2A>)
+(   7,<2017-05-18 06:18:18.226 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       8F F7 F0 60 0C B0 4E 5A 15 25 E5 21 42 00 55 BF>)
+(   8,<2017-05-18 06:18:18.232 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       65 59 BB 73 08 75 A3 F3 84 9E 38 77 97 BF 1B 6E>)
+(   9,<2017-05-18 06:18:18.238 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       BC 8F 97 43 53 49 73 48 71 1B D7 E7 DC CC 85 9F>)
+(  10,<2017-05-18 06:18:18.244 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       E4 58 D1 87 CA 3B 6A 76 D1 F4 93 F8 CE EE A2 2F>)
+(  11,<2017-05-18 06:18:18.249 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       41 61 3D 19 CF D8 E0 7E 66 7A 33 D4 2F DB 23 52>)
+(  12,<2017-05-18 06:18:18.255 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       DE 38 65 7E 83 81 A8 5B 65 E4 4E FC 24 60 77 F1>)
+(  13,<2017-05-18 06:18:18.260 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       3A D8 14 50 C2 E7 BF 8C 0A 0E A8 FE 32 36 66 61>)
+(  14,<2017-05-18 06:18:18.266 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       CA FB 5A 51 F4 2A CF BB 4D C2 A6 AE A1 3A 93 A0>)
+(  15,<2017-05-18 06:18:18.272 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       15 8C AA 06 47 C9 A2 1D 03 63 64 49 4D B2 21 D0>)
+(  16,<2017-05-18 06:18:18.278 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <add DC = 1 DATMOD = 1 of
+       1000 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       1001 14 "MP-caryophyllene_oxide" "/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr"
+       data hash MD5: 2K
+       41 A6 86 8B 68 7E C5 70 12 9E D6 2F 98 B7 34 B1>)
+(  17,<2017-05-18 06:18:18.290 +0200>,<nmr>,<CZC60678L0>,<proc1d>,<TopSpin 3.5.5>,
+      <apk 
+       data hash MD5: 2K
+       A0 FC 2F 19 9B 43 5E 9F F7 31 A9 80 F5 A9 1F 98>)
+##END=
+
+$$ hash MD5
+$$ A4 55 7B 82 A5 CD C8 13 C1 BD D1 68 7E C1 FA 36

@@ -3,37 +3,44 @@ function run_series_of_demo()
 % if nargin==0 [folder] = uigetdir('/Volumes/san256/users_for_mac_system_macPro/jeannerat/Dropbox/matlab_jeannerat/git_folder/main_matlab_function_library/SNR_SANI/figures','Select a folder ...')
 % Demo program for comparison of the SNR in spectra
 
-%% prepare figure
+
+%% prepare main figure when comparing san plot of different spectra
 figure(10);clf
 tic
-%clear all
-%% set path
-if exist('/home/','dir')
-    dropboxpath=['/home/djeanner/Dropbox/'];
-end
-if exist('/Users/','dir')
-    dropboxpath=['/Users/djeanner/Dropbox/'];
-end
-if exist('/Volumes/san256/','dir')
-    dropboxpath=['/Volumes/san256/users_for_mac_system_macPro/jeannerat/Dropbox/'];
-end
-if exist('/Users/','dir')
-    super_base='/Users/djeanner/switchdrive/nmr_data_used_for_2018/';
-end
-if exist('/Volumes/san256/','dir')
-    super_base='/Volumes/san256/users_for_mac_system_macPro/jeannerat/switchdrive/nmr_data_used_for_2018/';
-end
+% %clear all
+% %% set path
+% if exist('/home/','dir')
+%     dropboxpath=['/home/djeanner/Dropbox/'];
+% end
+% if exist('/Users/','dir')
+%     dropboxpath=['/Users/djeanner/Dropbox/'];
+% end
+% if exist('/Volumes/san256/','dir')
+%     dropboxpath=['/Volumes/san256/users_for_mac_system_macPro/jeannerat/Dropbox/'];
+% end
+% if exist('/Users/','dir')
+%     super_base='/Users/djeanner/switchdrive/nmr_data_used_for_2018/';
+% end
+% if exist('/Volumes/san256/','dir')
+%     super_base='/Volumes/san256/users_for_mac_system_macPro/jeannerat/switchdrive/nmr_data_used_for_2018/';
+% end
 Full_list=[];
-%for loop_over_spectra=[  -2  -4]% -2 and -3 deconvolution from KS series JMR
 %for loop_over_spectra=[ 1:20]% -2 and -3 deconvolution from KS series JMR
 %for loop_over_spectra=[ 0:20]% -2 and -3 deconvolution from KS series JMR
 %for loop_over_spectra=[ 20:27]% -2 and -3 deconvolution from KS series JMR
 %for loop_over_spectra=[ 20:27]% -2 and -3 deconvolution from KS series JMR
 %for loop_over_spectra=[ 1:5]% -2 and -3 deconvolution from KS series JMR
 %for loop_over_spectra=[0:5]% -2 and -3 deconvolution from KS series JMR
-Full_list=[Full_list [ 0:5]];
+Full_list=[Full_list [ 0 ]];
+Full_list=[Full_list [ 2:5]];
 Full_list=[Full_list [ 8:10]];
-Full_list=[Full_list [ 6 7 7.1 7.2 7.3]];
+Full_list=[Full_list [ 6 7 7.1 7.2 7.3 8 9 10]];%1D DEPT different processing
+Full_list=[Full_list [ 11 12 13]];%
+Full_list=[Full_list [ 14 15 16 17]];%
+Full_list=[Full_list [ 18 19]];%
+Full_list=[Full_list [ 20 21]];%
+Full_list=[Full_list [ 22 23]];%
+Full_list=[Full_list [ 24:26]];% NOESY temp instabilities
     for loop_over_spectra=Full_list% -2 and -3 deconvolution from KS series JMR
     %for loop_over_spectra=[ 6:10]% -2 and -3 deconvolution from KS series JMR
     %for loop_over_spectra=[ 2]% -2 and -3 deconvolution from KS series JMR
@@ -140,9 +147,7 @@ Full_list=[Full_list [ 6 7 7.1 7.2 7.3]];
                 last=1;
             end
         case 11
-            %     end
-            %     if (loop_over_spectra>=11) &&(loop_over_spectra<=11)%13C 1D
-            %
+           
             dataset='dj-caryophyllene_oxide';%mp_hap_benzoap_f2dec
             exp_name=['/Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/' dataset '/'];
             exp_no=11 ;%list of experiments to compare 21 was ns 1
@@ -366,7 +371,6 @@ Full_list=[Full_list [ 6 7 7.1 7.2 7.3]];
             if magnitude % this is to test noise statistics... artificially apply mc to 1D spectra (no obvious bruker command to do it)
                 warning('should not use magnitude like this .. .fix the program... It will be skiped')
                 data_set.spectrum=sqrt(data_set.spectrum.*data_set.spectrum+data_set.spectrum_ii.*data_set.spectrum_ii);
-                asfasdfa
              %   "check..." if product 
             end 
             if 1==1
@@ -374,7 +378,7 @@ Full_list=[Full_list [ 6 7 7.1 7.2 7.3]];
                 
                 %% determine noise level
                 
-                opt.show_shape=1;
+             %   opt.show_shape=1;
                 opt.show_window=1;
                 
                 %                 if loop_over_spectra<0

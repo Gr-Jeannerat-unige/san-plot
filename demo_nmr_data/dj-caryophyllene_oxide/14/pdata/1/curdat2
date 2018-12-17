@@ -1,0 +1,33 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 5
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 3	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ 2017-05-18 10:32:22.890 +0200  nmr@CZC60678L0
+$$ /opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr/dj-caryophyllene_oxide/14/pdata/1/curdat2
+$$ process /opt/topspin3.5pl5/prog/mod/dataserver
+##$CUREXP= <>
+##$DATPATH= <>
+##$DATPATH2= </opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr>
+##$DATPATH3= </opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr>
+##$DETAILS= <>
+##$DU= </u>
+##$DU2= <>
+##$DU3= <>
+##$EXPNO= 1
+##$EXPNO2= 10
+##$EXPNO3= 12
+##$NAME= <>
+##$NAME2= <dj-caryophyllene_oxide>
+##$NAME3= <dj-caryophyllene_oxide>
+##$PROCNO= 1
+##$PROCNO2= 1
+##$PROCNO3= 1
+##$SCALE2= 1
+##$SCALE3= 1
+##$TYPE= <>
+##$USER= <>
+##$USER2= <>
+##$USER3= <>
+##END=

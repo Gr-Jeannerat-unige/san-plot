@@ -1,0 +1,23 @@
+##TITLE= Audit trail, TopSpin 3.5 pl 5
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ /opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr/MP-caryophyllene_oxide/14/audita.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2017-05-18 06:18:17.195 +0200>,<nmr>,<CZC60678L0>,<go4>,<TopSpin 3.5.5>,
+      <created by zg
+	started at 2017-05-18 06:06:53.018 +0200,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       9E 1E 6D 2E E9 80 23 52 88 DF 68 E6 7A 8A 14 7E
+       data hash MD5: 2K * 256
+       01 8C 40 F6 B9 1E A8 F6 C4 19 69 3E 5B 67 28 F0>)
+(   2,<2017-05-18 06:18:17.232 +0200>,<nmr>,<CZC60678L0>,<audit>,<TopSpin 3.5.5>,
+      <user comment:
+       ICON-NMR User ID: nmr
+       data hash MD5: 2K * 256
+       01 8C 40 F6 B9 1E A8 F6 C4 19 69 3E 5B 67 28 F0>)
+##END=
+
+$$ hash MD5
+$$ 51 5C 08 AA E7 F9 7D 50 8D 77 2A 04 9B FC A5 89

@@ -1,10 +1,10 @@
 ##TITLE= Parameter file, TopSpin 4.0.3
 ##JCAMPDX= 5.0
 ##DATATYPE= Parameter Values
-##NPOINTS= 87	$$ modification sequence number
+##NPOINTS= 89	$$ modification sequence number
 ##ORIGIN= Bruker BioSpin GmbH
 ##OWNER= nmr
-$$ 2018-11-23 07:57:55.515 +0100  jeannerat@djmini2018.local
+$$ 2018-11-23 10:29:35.612 +0100  jeannerat@djmini2018.local
 $$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/cougnon/data/nmr/nmr/KC-SL-PURE/44/pdata/1/proc2s
 $$ process /opt/topspin4.0.3/prog/mod/dataserver
 ##$ABSF1= 0

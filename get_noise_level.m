@@ -236,10 +236,13 @@ st_of_log_scal=log10(sca(1));
 sc_pow10=round(power(10,st_of_log_scal:((en_of_log_scal-st_of_log_scal)/(to_pt_on_x_axis-1)):en_of_log_scal));
 %neg
 sca=1:size(work_sn,1);
- if plot_also_neg
-to_pt_on_x_axis=round(50*log10(size(work_sn,1)));%number of points on the axis
-en_of_log_scal=log10(sca(end));
-st_of_log_scal=log10(sca(1));
+if size(sca,2)==0
+    plot_also_neg=0;%Nothing to plot
+end
+if plot_also_neg
+    to_pt_on_x_axis=round(50*log10(size(work_sn,1)));%number of points on the axis
+    en_of_log_scal=log10(sca(end));
+    st_of_log_scal=log10(sca(1));
 sc_pow10n=round(power(10,st_of_log_scal:((en_of_log_scal-st_of_log_scal)/(to_pt_on_x_axis-1)):en_of_log_scal));
  end
 if plot_results

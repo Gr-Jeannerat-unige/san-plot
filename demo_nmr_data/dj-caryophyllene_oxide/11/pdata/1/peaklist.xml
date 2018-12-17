@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PeakList>
+  <PeakList1D>
+    <PeakList1DHeader creator="nmr" date="2017-05-18T05:49:20.562+02:00" expNo="11" name="MP-caryophyllene_oxide" owner="" procNo="1" source="/opt/topspin3.5pl5/data/jeannerat/data/nmr/nmr">
+      <PeakPickDetails>F1=262.057312ppm, F2=-62.064716ppm, MI=0.00cm, MAXI=10000.00cm, PC=1.400
+      </PeakPickDetails>
+    </PeakList1DHeader>
+    <Peak1D F1="151.835175" intensity="2.571470e+00" type="0"/>
+    <Peak1D F1="144.463013" intensity="4.712056e-01" type="0"/>
+    <Peak1D F1="112.771774" intensity="1.325069e+01" type="0"/>
+    <Peak1D F1="77.291740" intensity="5.900284e+00" type="0"/>
+    <Peak1D F1="77.037659" intensity="5.635781e+00" type="0"/>
+    <Peak1D F1="76.784752" intensity="5.806279e+00" type="0"/>
+    <Peak1D F1="63.759567" intensity="9.578171e+00" type="0"/>
+    <Peak1D F1="59.833755" intensity="1.812290e+00" type="0"/>
+    <Peak1D F1="50.730305" intensity="6.908655e+00" type="0"/>
+    <Peak1D F1="48.742729" intensity="7.623082e+00" type="0"/>
+    <Peak1D F1="39.753941" intensity="1.207934e+01" type="0"/>
+    <Peak1D F1="39.149925" intensity="1.331466e+01" type="0"/>
+    <Peak1D F1="34.027313" intensity="2.335227e+00" type="0"/>
+    <Peak1D F1="30.207659" intensity="1.377255e+01" type="0"/>
+    <Peak1D F1="29.900850" intensity="1.491877e+01" type="0"/>
+    <Peak1D F1="29.781672" intensity="1.250392e+01" type="0"/>
+    <Peak1D F1="27.210289" intensity="1.428306e+01" type="0"/>
+    <Peak1D F1="21.630678" intensity="1.500000e+01" type="0"/>
+    <Peak1D F1="17.006130" intensity="7.392406e+00" type="0"/>
+  </PeakList1D>
+</PeakList>

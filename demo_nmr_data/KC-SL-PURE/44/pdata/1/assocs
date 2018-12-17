@@ -1,11 +1,11 @@
-##TITLE= Parameter file, TopSpin 3.5 pl 7
+##TITLE= Parameter file, TopSpin 4.0.3
 ##JCAMPDX= 5.0
 ##DATATYPE= Parameter Values
-##NPOINTS= 1	$$ modification sequence number
+##NPOINTS= 2	$$ modification sequence number
 ##ORIGIN= Bruker BioSpin GmbH
 ##OWNER= nmr
-$$ 2017-11-13 09:02:55.608 +0100  nmr@CZC60678L0
-$$ /opt/topspin3.5pl5/data/cougnon/data/nmr/nmr/KC-SL-PURE/44/pdata/1/assocs
-$$ process /opt/topspin3.5pl7/prog/mod/dataserver
-##$MULTDISP= </opt/topspin3.5pl5/data/cougnon/data/nmr/nmr/KC-SL-PURE/47/pdata/1>
+$$ 2018-11-23 10:29:34.208 +0100  jeannerat@djmini2018.local
+$$ /Volumes/lacie_case/nmr_data/nmrge500_3/data/cougnon/data/nmr/nmr/KC-SL-PURE/44/pdata/1/assocs
+$$ process /opt/topspin4.0.3/prog/mod/dataserver
+##$MULTDISP= </Volumes/lacie_case/nmr_data/nmrge500_3/data/cougnon/data/nmr/nmr/KC-SL-PURE/39/pdata/1|/Volumes/lacie_case/nmr_data/nmrge500_3/data/cougnon/data/nmr/nmr/KC-SL-PURE/32/pdata/1>
 ##END=
