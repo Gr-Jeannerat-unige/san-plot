@@ -1,8 +1,7 @@
 function [ noise_level_pos, work_sp, I0_offset,  noise_level_initial, noise_level_neg, noise_level_inital_neg, ...
     how_much_higher_than_noise_are_signals,where_cut_stat,sc_pow10,val_pow10,signal_shape] ...
-    = get_noise_level(data,opt)
+    = simple_get_noise_level2(data,opt)
 plot_also_neg=1;
-plot_results_pos_optim=0;%swich to 1 to display the optimization of the position of the distribution used to determine noise
 %GET_NOISE_LEVEL Determine (and optionally plot) SAN plot of a matrix of
 %experimental data
 % Determine the noise level in a 1D, 2D spectrum (or any matrix of
@@ -103,7 +102,7 @@ if size(work_sp,1)>0
         disp(['Position of cutoff to measure SNR : ' num2str(where_cut_stat) '(Imposed)'])
         where_cut_stat_txt=[num2str(where_cut_stat*100) '%(set) '];
     else
-        where_cut_stat=determine_position_measure_SNR(work_sp,opt,plot_results_pos_optim);
+        where_cut_stat=determine_position_measure_SNR(work_sp,opt,plot_results);
         disp(['Position of cutoff to measure SNR : ' num2str(where_cut_stat) '(optimized)'])
         where_cut_stat_txt=[num2str(where_cut_stat*100) '%(opt) '];
         
@@ -248,10 +247,10 @@ if plot_also_neg
 end
 if plot_results
     figure(fig_number_main)
-    loglog(sc_pow10,work_sp(sc_pow10),'b-','DisplayName','S^+ Exp.');
+    loglog(sc_pow10,work_sp(sc_pow10),'b-','DisplayName','S^+^ Exp.');
     hold on
     if plot_also_neg
-        loglog(sc_pow10n,work_sn(sc_pow10n),'r-','DisplayName','S^- Exp.');
+        loglog(sc_pow10n,work_sn(sc_pow10n),'r-','DisplayName','S^-^ Exp.');
     end
 end
 val_pow10=work_sp(sc_pow10);
@@ -270,26 +269,15 @@ end
 opt.take_window_function_into_account=1;
 if ~skip_refinement
     
-    if opt.take_window_function_into_account%DEVEL
-        %DEVEL
-        [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sp,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
-        noise_array= noise_level_pos*noise_array;%DEVEL
-        %DEVEL
-        % noise_array=noise_array/correction_due_to_window_function;%DEVEL
-        %DEVEL
-        %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
-    else%DEVEL
         noise_array= noise_level_pos*awgn_dj(work_sp*0,0);
         noise_array=abs(noise_array);
         noise_array=sort(noise_array,'descend');
         correction_due_to_window_function=1;
-        %DEVEL
-    end%DEVEL
     %  loglog(b1+[1:size(noise,1)],noise','k--','DisplayName',['Syntetic noise (pos.)']);
     %  loglog([1:size(noise,1)],noise','m--','DisplayName',['Syntetic noise (pos.)']);
     if plot_results
         figure(fig_number_main)
-        loglog(sc_pow10,noise_array(sc_pow10),'b--','DisplayName',['N^+ Refined ' ...
+        loglog(sc_pow10,noise_array(sc_pow10),'b--','DisplayName',['N^+^ Refined ' ...
             num2str(noise_level_pos/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
             num2str(noise_level_pos,'%.0f')]);
     end
@@ -298,21 +286,10 @@ end
 % plot symulated gaussian noise pos.
 % noise= noise_level*awgn_dj(work_sp*0,0);
 
-if opt.take_window_function_into_account%DEVEL
-    %DEVEL
-    [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sp,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
-    noise_array= noise_level_initial*noise_array;%DEVEL
-    %DEVEL
-    % noise_array=noise_array/correction_due_to_window_function;%DEVEL
-    %DEVEL
-    %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
-else%DEVEL
     noise_array= noise_level_initial*awgn_dj(work_sp*0,0);
     noise_array=abs(noise_array);
     noise_array=sort(noise_array,'descend');
     correction_due_to_window_function=1;
-    %DEVEL
-end%DEVEL
 %
 
 %correction_due_to_window_function=1/(1/factor_corr*lev/noise_level_initial);
@@ -320,7 +297,7 @@ end%DEVEL
 % loglog(noise,'k-','DisplayName',['Syntetic noise (pos.)']);
 if plot_results
     figure(fig_number_main)
-    loglog(sc_pow10,noise_array(sc_pow10),'b:','DisplayName',['N^+ Initial ' ...
+    loglog(sc_pow10,noise_array(sc_pow10),'b:','DisplayName',['N^+^ Initial ' ...
         num2str(noise_level_initial/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
         num2str(noise_level_initial,'%.0f')]);
 end
@@ -352,32 +329,22 @@ if size(sca,2)>2
     sc_pow10=round(power(10,st_of_log_scal:((en_of_log_scal-st_of_log_scal)/(to_pt_on_x_axis-1)):en_of_log_scal));
     if plot_results
         figure(fig_number_main)
-        loglog(sc_pow10,log_refn(sc_pow10),'r-','DisplayName','S^- Exp.');
+        loglog(sc_pow10,log_refn(sc_pow10),'r-','DisplayName','S (-) Exp.');
     end
     if ~skip_refinement
         % negative noise plot
         % noise= noise_leveln*awgn_dj(work_sn*0,0);
-        if opt.take_window_function_into_account%DEVEL
-            %DEVEL
-            [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sn,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
-            noise_array= noise_level_neg*noise_array;%DEVEL
-            %DEVEL
-            % noise_array=noise_array/correction_due_to_window_function;%DEVEL
-            %DEVEL
-            %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
-        else%DEVEL
             noise_array= noise_level_neg*awgn_dj(work_sn*0,0);
             noise_array=abs(noise_array);
             noise_array=sort(noise_array,'descend');
             correction_due_to_window_function=1;
             
-        end%DEVEL
         
         % loglog(noise,'r--','DisplayName',['Syntetic noise (neg.)']);
         if plot_results
             figure(fig_number_main)
             %  loglog(sc_pow10,noise_array(sc_pow10),'r--','DisplayName',['Synthetic noise (neg.) CORR WIND ' ...
-            loglog(sc_pow10,noise_array(sc_pow10),'r--','DisplayName',['N^- Refined ' ...
+            loglog(sc_pow10,noise_array(sc_pow10),'r--','DisplayName',['N (-) Refined ' ...
                 num2str(noise_level_neg/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
                 num2str(noise_level_neg,'%.0f')]);
         end
@@ -389,25 +356,15 @@ if size(sca,2)>2
     % noise= noise_leveln*awgn_dj(work_sn*0,0);
     %noise_array= noise_level_inital_neg*awgn_dj(work_sn*0,0);
     
-    if opt.take_window_function_into_account%DEVEL
-        %DEVEL
-        [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sn,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
-        noise_array= noise_level_inital_neg*noise_array;%DEVEL
-        %DEVEL
-        % noise_array=noise_array/correction_due_to_window_function;%DEVEL
-        %DEVEL
-        %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
-    else%DEVEL
         noise_array= noise_level_inital_neg*awgn_dj(work_sn*0,0);
         noise_array=abs(noise_array);
         noise_array=sort(noise_array,'descend');
         correction_due_to_window_function=1;
         
-    end%DEVEL
     % loglog(noise,'r--','DisplayName',['Syntetic noise (neg.)']);
     if plot_results
         figure(fig_number_main)
-        loglog(sc_pow10,noise_array(sc_pow10),'r:','DisplayName',['N^- Initial ' ...
+        loglog(sc_pow10,noise_array(sc_pow10),'r:','DisplayName',['N (-) Initial ' ...
             num2str(noise_level_inital_neg/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
             num2str(noise_level_inital_neg,'%.0f')]);
         
@@ -432,7 +389,7 @@ text_noise2='';
 if (noise_level_pos>min(min(work_sp)) && (noise_level_pos<max(max(work_sp))))
     if plot_results
         figure(fig_number_main)
-        loglog(coord_pt_nois_initial(1,1),coord_pt_nois_initial(1,2),'bo','DisplayName','Set N^+');
+        loglog(coord_pt_nois_initial(1,1),coord_pt_nois_initial(1,2),'bo','DisplayName','Set N^+^');
         text(coord_pt_nois_initial(1,1),coord_pt_nois_initial(1,2),(where_cut_stat_txt),'HorizontalAlignment','right')
         %    loglog(coord_pt_nois_refined(1,1),coord_pt_nois_refined(1,2),'ko','DisplayName','Calib N (+) Final');
         if size(coord_pt_nois_initial_neg,2)>1
@@ -499,93 +456,9 @@ if plot_results
     
 end
 %% show_window
-if isfield(opt,'show_window')%DEVEL
-    if opt.show_window%DEVEL
-        %DEVEL
-        %% plot window function distribution of positive peak on top...%DEVEL
-        [sc_pow10_window,val_pow10_window]=demo_wind(data);%just display%DEVEL
-        figure(fig_number_main);%DEVEL
-        %DEVEL
-        %% determine noise level%DEVEL
-        % [data_set.noise_level, data_set.list_peaks, data_set.I0_offset, data_set.noise_levela , data_set.noise_leveln , data_set.noise_levelan, ...%DEVEL
-        %    how_much_higher_than_noise_are_signals,where_cut_stat,sc_pow10,val_pow10]=get_noise_level(data,opt);%DEVEL
-        %% correct the spectrum%DEVEL
-        %  figure(10);loglog(sc_pow10,val_pow10,'DisplayName',['sp']);hold on  %    ));%DEVEL
-        %DEVEL
-        %   pos_norm=round(0.4*size(val_pow10_window,2))+1;%DEVEL
-        %DEVEL
-        % %         to_pt=round(min([size(sc_pow10_window,2) size(sc_pow10,2)])*0.8);%DEVEL
-        % %         v1=log(val_pow10_window(1,1:to_pt));%DEVEL
-        % %         v2=log(val_pow10(1:to_pt,1))';%DEVEL
-        % %         [delas pos_norm]=min((v2-v1));%DEVEL
-        % %         f=val_pow10(pos_norm,1)/val_pow10_window(1,pos_norm);%DEVEL
-        f=val_pow10(1,1)/(val_pow10_window(1,1)*10);%DEVEL
-        %%  text([sc_pow10_window(1,pos_norm) ],[val_pow10_window(1,pos_norm) ],'position for scaling window shape')%DEVEL
-        %%  loglog([sc_pow10_window(1,pos_norm) sc_pow10(1,pos_norm)],[val_pow10_window(1,pos_norm) val_pow10(pos_norm,1)],'kx')%DEVEL
-        %loglog([sc_pow10_window(1,pos_norm) sc_pow10(1,pos_norm)],[val_pow10_window(1,pos_norm) val_pow10(pos_norm,1)],'r:')%DEVEL
-        %loglog([sc_pow10_window(1,pos_norm) sc_pow10(1,pos_norm)],[val_pow10_window(1,pos_norm) val_pow10(pos_norm,1)],'rx')%DEVEL
-        %  figure(10);loglog(sc_pow10_window,val_pow10_window*val_pow10(1,1)/val_pow10_window(1,1),'r:','DisplayName',['wind']);hold on  %    ),'DisplayName','Intensities (pos.)');%DEVEL
-        % figure(10);loglog(sc_pow10_window,val_pow10_window*val_pow10(pos_norm,1)/val_pow10_window(1,pos_norm),'DisplayName',['wind']);hold on  %    ),'DisplayName','Intensities (pos.)');%DEVEL
-        if plot_results%DEVEL
-            figure(fig_number_main)%DEVEL
-            loglog(sc_pow10_window,val_pow10_window*f,'b:','DisplayName',['window shape direct dim.']);hold on  %    ),'DisplayName','Intensities (pos.)');%DEVEL
-            %DEVEL
-            %DEVEL
-        end%DEVEL
-    end%DEVEL
-end%DEVEL
 
 %% disp general/average shape
-if isfield(opt,'show_shape')%DEVEL
-    %DEVEL
-    if isfield(data,'td1')%DEVEL
-        if opt.show_shape%DEVEL
-            %DEVEL
-            data.noise_level=noise_level_pos;%DEVEL
-            %%%%%%%%%%%%%%%%%%%%%DEVEL
-            %%%%%%%%%%%%%%%%%%%%%DEVEL
-            %%%%%%%%%%%%%%%%%%%%%DEVEL
-            %%%%%%%%%%%%%%%%%%%%%DEVEL
-            % up_to_this_number_of_time_noise_level=15;%DEVEL
-            if ~isfield(opt,'zero_fill')%DEVEL
-                opt.zero_fill=15;%DEVEL
-            end%DEVEL
-            if ~isfield(opt,'target_resol')%DEVEL
-                opt.target_resol=0.05;%DEVEL
-            end%DEVEL
             
-            signal_shape= determine_signal_shape(data,opt.up_to_this_number_of_time_noise_level,opt.fig_number,opt.zero_fill,opt.target_resol);%DEVEL
-            %prepare to calculate distribution%DEVEL
-            work_spl=real(signal_shape);%DEVEL
-            work_spl=reshape(work_spl,size(work_spl,1)*size(work_spl,2),1);% transforms 2d matrix into a vector%DEVEL
-            work_spl=sort(work_spl,'descend');% sort points%DEVEL
-            [sc_pow10_sha,val_pow10_sha]=interp_log_distrib(work_spl',50);%DEVEL
-            %prepare plot%DEVEL
-            % %         to_pt=round(min([size(sc_pow10_sha,2) size(sc_pow10,2)])/2);%DEVEL
-            % %         v1=log(val_pow10_sha(1,1:to_pt));%DEVEL
-            % %         v2=log(val_pow10(1:to_pt,1))';%DEVEL
-            % %         [delas pos_norm]=min((v2-v1));%DEVEL
-            pos_norm=1;%DEVEL
-            scal_fact=val_pow10(pos_norm,1)/(10.00000*val_pow10_sha(1,pos_norm));%DEVEL
-            %DEVEL
-            if plot_results%DEVEL
-                figure(fig_number_main);%DEVEL
-                %DEVEL
-                % scal_fact=1;%DEVEL
-                loglog(sc_pow10_sha,val_pow10_sha*scal_fact,'m--','DisplayName',['shape']);hold on  %    ),'DisplayName','Intensities (pos.)');%DEVEL
-                %  loglog(sc_pow10_sha(pos_norm),val_pow10_sha(1,pos_norm)*val_pow10(pos_norm,1)/(10.00000*val_pow10_sha(1,pos_norm)),'mx')%DEVEL
-                %DEVEL
-            end%DEVEL
-            %%%%%%%%%%%%%%%%%%%%%DEVEL
-            %%%%%%%%%%%%%%%%%%%%%DEVEL
-            %%%%%%%%%%%%%%%%%%%%%DEVEL
-            %%%%%%%%%%%%%%%%%%%%%DEVEL
-        end%DEVEL
-    end%DEVEL
-    %DEVEL
-    %DEVEL
-    disp([  textsignal text_noise2 textsnr offset_text]);%DEVEL
-end%DEVEL
 
 if plot_results
     fig= figure(fig_number_main);

@@ -1,7 +1,12 @@
 function [ where_cut_stat ] = determine_position_measure_SNR(work_sp,opt,plot_results)
 %determine the optimal position in the distribution to measure the noise
+% i.e. where it varies the least about the central value about these
+% different location tested
+
+consider_list=[0.5:0.1:0.9];%testing beyond 0.9 requires to change the algorithm below
+
 if nargin<3
-    plot_results=1;
+    plot_results=0;
 end
 %UNTITLED2 determination position cut for SNR calculation
 %   Detailed explanation goes here
@@ -22,8 +27,7 @@ end
 if plot_results
     figure(fig_number_main);clf;        plot(cutoff(1,:),cutoff(2,:),'r-'); hold on
 end
-consider_list=[0.5:0.1:0.9];%if want to go beyon 0.9, should change the algo below
-min_ki=1e10;
+min_ki=1e50;
 for calc_this=consider_list
     delta=(consider_list(1,2)-consider_list(1,1))/2;
     from=calc_this-delta;
@@ -43,11 +47,10 @@ for calc_this=consider_list
     end
 end
 if plot_results
-    
     plot(where_cut_stat,level,'go');
     plot([0 1],level+[0 0],'g:');
     axis([0 1 0 average_value*2])
-    title(['NSR at varions point of point distribution. Best for ' num2str(where_cut_stat)])
+    title(['NSR at varions percentage of point distribution. Best for ' num2str(where_cut_stat)])
 end
 end
 

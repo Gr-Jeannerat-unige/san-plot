@@ -1,46 +1,13 @@
-function MAIN_DEMO()
+function program_used_to_prepare_san_paper()
 % if nargin==0 [file,path,indx] = uigetfile('*.m','Select a file ...','explain_sort_sani_plot.m')
 % if nargin==0 [folder] = uigetdir('/Volumes/san256/users_for_mac_system_macPro/jeannerat/Dropbox/matlab_jeannerat/git_folder/main_matlab_function_library/SNR_SANI/figures','Select a folder ...')
 % Demo program for comparison of the SNR in spectra
 
+%make simple version with less options to limit the number of necessary functions
 %% prepare main figure when comparing san plot of different spectra
-mkdir('Results_paper_git')
-figure(10);clf
-tic
-% %clear all
-% %% set path
-% if exist('/home/','dir')
-%     dropboxpath=['/home/djeanner/Dropbox/'];
-% end
-% if exist('/Users/','dir')
-%     dropboxpath=['/Users/djeanner/Dropbox/'];
-% end
-% if exist('/Volumes/san256/','dir')
-%     dropboxpath=['/Volumes/san256/users_for_mac_system_macPro/jeannerat/Dropbox/'];
-% end
-% if exist('/Users/','dir')
-%     super_base='/Users/djeanner/switchdrive/nmr_data_used_for_2018/';
-% end
-% if exist('/Volumes/san256/','dir')
-%     super_base='/Volumes/san256/users_for_mac_system_macPro/jeannerat/switchdrive/nmr_data_used_for_2018/';
-% end
+mkdir('Results')
 Full_list=[];
-%for loop_over_spectra=[ 1:20]% -2 and -3 deconvolution from KS series JMR
-%for loop_over_spectra=[ 0:20]% -2 and -3 deconvolution from KS series JMR
-%for loop_over_spectra=[ 20:27]% -2 and -3 deconvolution from KS series JMR
-%for loop_over_spectra=[ 20:27]% -2 and -3 deconvolution from KS series JMR
-%for loop_over_spectra=[ 1:5]% -2 and -3 deconvolution from KS series JMR
-%for loop_over_spectra=[0:5]% -2 and -3 deconvolution from KS series JMR
-Full_list=[Full_list [ 0 ]];
-Full_list=[Full_list [ 2:5]];
-Full_list=[Full_list [ 8:10]];
-Full_list=[Full_list [ 6 7 7.1 7.2 7.3 8 9 10]];%1D DEPT different processing
-Full_list=[Full_list [ 11 12 13]];%
-Full_list=[Full_list [ 14 15 16 17]];%
-Full_list=[Full_list [ 18 19]];%
-Full_list=[Full_list [ 20 21]];%
-Full_list=[Full_list [ 22 23]];%
-Full_list=[Full_list [ 24:26]];% NOESY temp instabilities
+Full_list=[Full_list [ 0 20]];
     for loop_over_spectra=Full_list% -2 and -3 deconvolution from KS series JMR
     %for loop_over_spectra=[ 6:10]% -2 and -3 deconvolution from KS series JMR
     %for loop_over_spectra=[ 2]% -2 and -3 deconvolution from KS series JMR
@@ -349,31 +316,25 @@ Full_list=[Full_list [ 24:26]];% NOESY temp instabilities
             end
             
             disp(['--------------------------------------------------------------------------------------------------------- ' num2str(loop_over_spectra) ])
-            disp(['Workin on spectrum  ' dataset ' ' num2str(exp_no) '/pdata/' num2str(exp_procno)  ' ' data_set.pulprog])
+            disp(['Working on spectrum  ' dataset ' ' num2str(exp_no) '/pdata/' num2str(exp_procno)  ' ' data_set.pulprog])
             if exist('limit_chemical_shift_f2','var')
                 data_set.limit_chemical_shift_f2=limit_chemical_shift_f2;
             end
-            if exist('limit_chemical_shift_f1','var')
+            if exist('limit_chemical_shift_f1','var')%
                 data_set.limit_chemical_shift_f1=limit_chemical_shift_f1;
-            end
-            data_set.main_loop_index= loop_over_spectra;
-            if exist('dec_param','var')
-                data_set.dec_param=dec_param;
-            end
-            if exist('o1p_roi','var')
-                %             roi_lineshape_deconvolution=round([(o1p_roi-data_set.of1p+data_set.sw1/2)/data_set.sw1*data_set.si1 (o2p_roi-data_set.o1p+data_set.sw2/2)/data_set.sw2*data_set.si2]);
-                %             data_set.roi_lineshape_deconvolution=roi_lineshape_deconvolution;
-                %
-                roi_lineshape_deconvolution=round([(-o1p_roi+data_set.of1p+data_set.sw1/2)/data_set.sw1*data_set.si1 (-o2p_roi+data_set.o1p+data_set.sw2/2)/data_set.sw2*data_set.si2]);
-                data_set.roi_lineshape_deconvolution=roi_lineshape_deconvolution;
-            end
+            end%
+            data_set.main_loop_index= loop_over_spectra;%
+            if exist('dec_param','var')%
+                data_set.dec_param=dec_param;%
+            end%
+            if exist('o1p_roi','var')%
+                %             roi_lineshape_deconvolution=round([(o1p_roi-data_set.of1p+data_set.sw1/2)/data_set.sw1*data_set.si1 (o2p_roi-data_set.o1p+data_set.sw2/2)/data_set.sw2*data_set.si2]);%
+                %             data_set.roi_lineshape_deconvolution=roi_lineshape_deconvolution;%
+                %%
+                roi_lineshape_deconvolution=round([(-o1p_roi+data_set.of1p+data_set.sw1/2)/data_set.sw1*data_set.si1 (-o2p_roi+data_set.o1p+data_set.sw2/2)/data_set.sw2*data_set.si2]);%
+                data_set.roi_lineshape_deconvolution=roi_lineshape_deconvolution;%
+            end%
             
-            if magnitude % this is to test noise statistics... artificially apply mc to 1D spectra (no obvious bruker command to do it)
-                warning('should not use magnitude like this .. .fix the program... It will be skiped')
-                data_set.spectrum=sqrt(data_set.spectrum.*data_set.spectrum+data_set.spectrum_ii.*data_set.spectrum_ii);
-             %   "check..." if product 
-            end 
-            if 1==1
                 [sc_pow10_window,val_pow10_window]=demo_wind(data_set);%just display
                 
                 %% determine noise level
@@ -407,28 +368,6 @@ Full_list=[Full_list [ 24:26]];% NOESY temp instabilities
                 %%%%%%%%%%%%%%%%%%%%
                 %%%%%%%%%%%%%%%%%%%%
                 
-                if ~isfield(data_set,'signal_shape')
-                    signal_shape= determine_signal_shape(data_set,opt.up_to_this_number_of_time_noise_level,loop_over_spectra);
-                else
-                    signal_shape=data_set.signal_shape;
-                end
-                if (size(data_set.signal_shape,1)>1) && (size(data_set.signal_shape,2)>1)
-                    %prepare distribution
-                    work_sp=real(signal_shape);
-                    work_sp=reshape(work_sp,size(work_sp,1)*size(work_sp,2),1);% transforms 2d matrix into a vector
-                    work_sp=sort(work_sp,'descend');% sort points
-                    [sc_pow10_sha,val_pow10_sha]=interp_log_distrib(work_sp',50);
-                    %prepare plot
-                    to_pt=round(min([size(sc_pow10_sha,2) size(sc_pow10,2)])/2);
-                    v1=log(val_pow10_sha(1,1:to_pt));
-                    v2=log(val_pow10(1:to_pt,1))';
-                    [~, pos_norm]=min((v2-v1));
-                    tmp_plot=val_pow10_sha*val_pow10(pos_norm,1)/val_pow10_sha(1,pos_norm);
-                    figure(10);loglog(sc_pow10_sha,tmp_plot,'DisplayName',['shape']);hold on  %    ),'DisplayName','Intensities (pos.)');
-                    
-                    
-                    loglog(sc_pow10_sha(pos_norm),val_pow10_sha(1,pos_norm)*val_pow10(pos_norm,1)/val_pow10_sha(1,pos_norm),'gx')
-                end
                 if ~exist('supp_ti','var')
                     supp_ti=[num2str(data_set.acquno) '/' num2str(data_set.procno)];
                 end
@@ -438,57 +377,27 @@ Full_list=[Full_list [ 24:26]];% NOESY temp instabilities
                     figure(10);loglog(sc_pow10,val_pow10*(2),'k--','DisplayName',['2xS(+) NS=1']);hold on  %    ));
                     
                 end
-                %   pos_norm=round(0.4*size(val_pow10_window,2))+1;
                 
                 to_pt=round(min([size(sc_pow10_window,2) size(sc_pow10,2)])/2);
                 v1=log(val_pow10_window(1,1:to_pt));
                 v2=log(val_pow10(1:to_pt,1))';
                 [~, pos_norm]=min((v2-v1));
-                % red cross at max
-                %  loglog(sc_pow10_window(pos_norm),val_pow10_window(1,pos_norm)*val_pow10(pos_norm,1)/val_pow10_window(1,pos_norm),'rx')
-                
-                
-                %  figure(10);loglog(sc_pow10_window,val_pow10_window*val_pow10(1,1)/val_pow10_window(1,1),'r:','DisplayName',['wind']);hold on  %    ),'DisplayName','Intensities (pos.)');
-                % figure(10);loglog(sc_pow10_window,val_pow10_window*val_pow10(pos_norm,1)/val_pow10_window(1,pos_norm),'DisplayName',['wind']);hold on  %    ),'DisplayName','Intensities (pos.)');
-                %      figure(10);loglog(sc_pow10_window,val_pow10_window*val_pow10(pos_norm,1)/val_pow10_window(1,pos_norm),'k:','DisplayName',['wind. func.']);hold on  %    ),'DisplayName','Intensities (pos.)');
-                
                 %
-                %         if loop_over_spectra==8
-                %             refir=val_pow10;
-                %
-                %             end
-                %         % sum
-                %    to_pt=min([size(sc_pow10_window,2) size(sc_pow10,2)]);
-                %         ttmp=sc_pow10_window(1,1:to_pt);
-                %         ttmp1=sc_pow10(1,1:to_pt);
-                %
-                %         tkmp=refir(1:to_pt,1)';
-                %         trer=val_pow10_window(1,1:to_pt);
-                %         to_plot=(tkmp.*trer);
-                %         to_plot=to_plot*refir(pos_norm,1)/to_plot(1,pos_norm)
-                %         figure(10);loglog(ttmp,to_plot,'k--','DisplayName',['sum']);hold on  %    ),'DisplayName','Intensities (pos.)');
                 
                 drawnow;
                 legend('Location','SouthWest');
                 legend('off');
-                %                 switch loop_over_spectra
-                %                     case {13 17 }
-                %                         last=1;
-                %                 end
+               
                 if last%plot final figure
                     set(findall(gca, 'Type', 'Line'),'LineWidth',1.5);
                     y_dims=ylim;  ylim([1 y_dims(1,2)]);%set lower bound avoi showing long tail with very small values)
                     fig= figure(10);
                     set(fig,'PaperUnits' , 'centimeters');
-                  %  fig.PaperUnits = 'centimeters';
                     %size of figure
                     width_fig=18;
                     width_fig=9;
                     width_fig=12;
                     height_fig=width_fig*2/3;
-                  %  fig.PaperPosition = [1 29-height_fig width_fig height_fig];% for vertical A4
-%                     fig.PaperOrientation = 'portrait';% portrait should be default...
-%                     fig.PaperType = 'a4';% portrait should be default...
                      set(fig,'PaperOrientation','portrait');% portrait should be default...
                     set(fig,'PaperType', 'a4');% portrait should be default...
                     legend()
@@ -497,99 +406,18 @@ Full_list=[Full_list [ 24:26]];% NOESY temp instabilities
                     end
                     title([dataset_name],'interpreter','none')
                     drawnow;
-                    print('-depsc','-tiff','-r600',[ './Results_paper_git/Final_comparison_snr_' data_set.expname '_' num2str(loop_over_spectra) '.eps']);%here
-                    print('-dpdf',[ './Results_paper_git/Final_comparison_snr_' data_set.expname '_' num2str(loop_over_spectra) '.pdf']);%here
+                    print('-dpdf',[ '.' filesep 'Results' filesep 'Final_comparison_snr_' data_set.expname '_' num2str(loop_over_spectra) '.pdf']);%here
                     figure(10);clf
                 end
-            end
-            if LB~=0 % plot additional figures in some cases.
-                figure(344228);
-                txttl=['LB = ' num2str(LB)];
-                if LB<0.01
-                    clf
-                    txttl='LB = 0';
-                end
-                %  loglog(data_set.noise_level,val_pow10(1,1),'rx');
-                plot(data_set.noise_level,val_pow10(1,1),'rx');
-                hold on;
-                txttl=[txttl 'SINO = ' num2str(val_pow10(1,1)/(2*data_set.noise_level)) ];
-                
-                text(data_set.noise_level,val_pow10(1,1),txttl);
-                if LB==8
-                    y_dims=ylim;  ylim([0 y_dims(1,2)]);%set lower bound avoi showing long tail with very small values)
-                    x_dims=xlim;  xlim([0 x_dims(1,2)]);%set lower bound avoi showing long tail with very small values)
-                    title('Demo SNR peaks at match LB matches T2')
-                    print('-dpdf',[ './Results_paper_git/Test_match_condition_.pdf']);%here
-                end
            
-                figure(344229);
-                txttl=['LB = ' num2str(LB)];
-                if LB<0.01
-                    clf
-                    txttl='LB = 0';
-                end              %  loglog(data_set.noise_level,val_pow10(1,1),'rx');
-                plot(log(LB),(val_pow10(1,1)),'rx');
-                hold on;
-                txttl=[txttl 'SINO = ' num2str(val_pow10(1,1)/(2*data_set.noise_level)) ];
-                
-                text(data_set.noise_level,val_pow10(1,1),txttl);
-                if LB==8
-                    %                                         y_dims=ylim;  ylim([0 y_dims(1,2)]);%set lower bound avoi showing long tail with very small values)
-                    %                                         x_dims=xlim;  xlim([0 x_dims(1,2)]);%set lower bound avoi showing long tail with very small values)
-                    title('Demo SNR peaks at match LB matches T2')
-                    print('-dpdf',[ './Results_paper_git/Test_match_condition_S1.pdf']);%here
-                end
-                
-          
-                figure(344227);
-                txttl=['LB = ' num2str(LB)];
-                if LB<0.01
-                    clf
-                    txttl='LB = 0';
-                end
-                %  loglog(data_set.noise_level,val_pow10(1,1),'rx');
-                plot(log(LB),(data_set.noise_level),'rx');
-                hold on;
-                txttl=[txttl 'SINO = ' num2str(val_pow10(1,1)/(2*data_set.noise_level)) ];
-                
-                text(data_set.noise_level,val_pow10(1,1),txttl);
-                if LB==8
-                    %                                         y_dims=ylim;  ylim([0 y_dims(1,2)]);%set lower bound avoi showing long tail with very small values)
-                    %                                         x_dims=xlim;  xlim([0 x_dims(1,2)]);%set lower bound avoi showing long tail with very small values)
-                    title('Demo SNR peaks at match LB matches T2')
-                    print('-dpdf',[ './Results_paper_git/Test_match_condition_S2.pdf']);%here
                     
-                end
-            end
-            %% plot spectrum...
-            plot_2d_interp(data_set);
-            fig=gcf;
-            set(findall(gca, 'Type', 'Line'),'LineWidth',1.5);
-            orient(fig,'landscape')
-            proc_txt1='';
-            proc_txt2='';
-            if isfield(data_set,'td1')
-                [~,~,proc_txt1]=window_function_Bruker(data_set,1);
-            else
-                [~,~,proc_txt1]=window_function_Bruker(data_set,2);
-            end
-            [~,~,proc_txt2]=window_function_Bruker(data_set,2);
             
-            titext= [num2str(data_set.expname) ' ' num2str(data_set.acquno)  ' ' num2str(data_set.procno)  ' (' data_set.pulprog(2:end-1) ') ' proc_txt1 proc_txt2];
-            title(titext,'Interpreter','none');
-            set(fig,'PaperUnits' , 'centimeters');
-        %    fig.PaperUnits = 'centimeters';
-           % fig.PaperPosition = [3 10 15 10];
-                        set(fig,'PaperPosition' ,[3 10 15 10]);
 
-            drawnow;
-            print('-dpdf',['./Results_paper_git/Spectrum_' data_set.expname '_' num2str(data_set.acquno)  '_' num2str(data_set.procno) '_'  '.pdf']);%here
-            print('-depsc',['./Results_paper_git/Spectrum_' data_set.expname '_' num2str(data_set.acquno)  '_' num2str(data_set.procno) '_'  '.eps']);%here
         end
     end
 end
 %   pause
 
-toc
 %print('-depsc','-tiff','-r600',['./Comparison_snr_' dataset '.eps']);%here
 end
+
