@@ -1,18 +1,22 @@
 function SAN_plot_from_bruker_data()
-% SAN_plot_from_bruker_data()
+% SAN_plot_from_bruker_data() ' num2str(lower_limit_of_expno_or_proco_to_reach) '
 
+lower_limit_of_expno_or_proco_to_reach=1;
 upper_limit_of_expno_or_proco_to_reach=999;
-msg=['Select the folder including the source for the SAN plot' 10 ];
-msg=[msg 'For a single spectrum, point to .../expname/exp_number/pdata/proc_number ' 10 ];%type 1
-msg=[msg 'For a serie of spectra with a given exp_number and processing numbers 1-' num2str(upper_limit_of_expno_or_proco_to_reach) ', point to : .../expname/exp_number ' 10 ];%type 2
-msg=[msg 'For a serie of spectra with the exp_number 1-' num2str(upper_limit_of_expno_or_proco_to_reach) ' and processing 1, point to : .../expname ' 10 ];%type 3
-width=700;
-d = dialog('Position',[300 300 width 250],'Name','Generate SAN plot from Bruker spectra');
 
-txt = uicontrol('Parent',d,'Style','text',...
-    'Position',[20 80 width-(20+20) 80], 'String',msg);
-w=70;
+% % explanation
+% msg=['Select the folder including the source for the SAN plot' 10 ];
+% msg=[msg 'For a single spectrum, point to ...' filesep ' expname' filesep 'exp_number' filesep 'pdata' filesep 'proc_number ' 10 ];%type 1
+% msg=[msg 'For a serie of spectra with a given exp_number and processing numbers ' num2str(lower_limit_of_expno_or_proco_to_reach) '-' num2str(upper_limit_of_expno_or_proco_to_reach) ', point to : ...' filesep 'expname' filesep 'exp_number ' 10 ];%type 2
+% msg=[msg 'For a serie of spectra with the exp_number ' num2str(lower_limit_of_expno_or_proco_to_reach) '-' num2str(upper_limit_of_expno_or_proco_to_reach) ' and processing 1, point to : ...' filesep 'expname ' 10 ];%type 3
+% width=700;
+% d = dialog('Position',[300 300 width 250],'Name','Generate SAN plot from Bruker spectra');
+% 
+% txt = uicontrol('Parent',d,'Style','text',...
+%     'Position',[20 80 width-(20+20) 80], 'String',msg);
 
+
+% setting path
 path_of_experiments=['.' filesep 'demo_nmr_data'];
 dataset='';
 
@@ -30,9 +34,9 @@ while (counter==1) %loop until get data to generate plot
     end
     %disp(['init : ' path_acqu2])
     m=size(pos_find_sep,2);
-    
+    if exist('d','var')
     delete(d)
-    
+    end
     pos_find_pdata=strfind(base_path,'pdata');
     last_field_number=str2num(base_path(pos_find_sep(m-1)+1:pos_find_sep(m)-1));%try to get number
     
@@ -64,14 +68,14 @@ while (counter==1) %loop until get data to generate plot
     
     m=size(pos_find_sep,2);
     if type==3
-        list_acqus=[1:upper_limit_of_expno_or_proco_to_reach];
+        list_acqus=[lower_limit_of_expno_or_proco_to_reach:upper_limit_of_expno_or_proco_to_reach];
         list_procs=[1];
         base_path=base_path(1:pos_find_sep(m-0));
         
     end
     if type==1
         list_acqus =[last_field_number];
-        list_procs=[1:upper_limit_of_expno_or_proco_to_reach];
+        list_procs=[lower_limit_of_expno_or_proco_to_reach:upper_limit_of_expno_or_proco_to_reach];
         base_path=base_path(1:pos_find_sep(m-1));
         
     end
@@ -107,7 +111,6 @@ while (counter==1) %loop until get data to generate plot
                 [data_set.noise_level, data_set.list_peaks, data_set.I0_offset, data_set.noise_levela , data_set.noise_leveln , data_set.noise_levelan, ...
                     how_much_higher_than_noise_are_signals, where_determine_noise_level, sc_pow10, val_pow10, data_set.signal_shape] ...
                     = get_noise_level_simple(data_set,opt);
-                
                 %% correct the spectrum
                 %
                 %   for x = 1:10

@@ -1,0 +1,129 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration build-checksum="2621666935" file="/Volumes/san256/users_for_mac_system_macPro/jeannerat/mygit/san-plot/SAN_plot_from_bruker_data.prj" location="/Volumes/san256/users_for_mac_system_macPro/jeannerat/mygit/san-plot" name="SAN_plot_from_bruker_data" preferred-package-location="/Volumes/san256/users_for_mac_system_macPro/jeannerat/mygit/san-plot/SAN_plot_from_bruker_data/for_redistribution" preferred-package-type="package.type.app" target="target.ezdeploy.standalone" target-name="Application Compiler">
+    <param.appname>SAN_plot_from_bruker_data</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>1.0</param.version>
+    <param.authnamewatermark>Damien Jeannerat</param.authnamewatermark>
+    <param.email>damien.jeannerat@unige.ch</param.email>
+    <param.company>University of Geneva</param.company>
+    <param.summary>Plotting SAN plot from Bruker data</param.summary>
+    <param.description>Plotting SAN plot from Bruker data</param.description>
+    <param.screenshot />
+    <param.guid />
+    <param.installpath.string>/University_of_Geneva/SAN_plot_from_bruker_data/</param.installpath.string>
+    <param.installpath.combo>option.installpath.systemwideapp</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.target.install.notes>In the following directions, replace MR/v95 by the directory on the target machine where MATLAB is installed, or MR by the directory where the MATLAB Runtime is installed.
+
+If the environment variable DYLD_LIBRARY_PATH is undefined, set it to the following string:
+
+MR/v95/runtime/maci64:MR/v95/sys/os/maci64:MR/v95/bin/maci64
+
+If it is defined, set it to the following:
+
+${DYLD_LIBRARY_PATH}:MR/v95/runtime/maci64:MR/v95/sys/os/maci64:MR/v95/bin/maci64</param.target.install.notes>
+    <param.intermediate>${PROJECT_ROOT}/SAN_plot_from_bruker_data/for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}/SAN_plot_from_bruker_data/for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}/SAN_plot_from_bruker_data/for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}/SAN_plot_from_bruker_data</param.logdir>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>false</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <param.native.matlab>false</param.native.matlab>
+    <param.checkbox>false</param.checkbox>
+    <param.example />
+    <param.help.text />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.version />
+      <param.company />
+      <param.screenshot />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.logdir />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+      <param.native.matlab />
+      <param.checkbox />
+      <param.example />
+      <param.help.text />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}/SAN_plot_from_bruker_data.m</file>
+    </fileset.main>
+    <fileset.resources />
+    <fileset.package />
+    <fileset.depfun>
+      <file>/Volumes/san256/users_for_mac_system_macPro/jeannerat/Dropbox/matlab_jeannerat/git_folder/main_matlab_function_library/SNR_SANI/sim_1d_spectrum_with_noise.m</file>
+      <file>${PROJECT_ROOT}/awgn_dj.m</file>
+      <file>${PROJECT_ROOT}/determine_position_measure_SNR.m</file>
+      <file>${PROJECT_ROOT}/get_noise_level_simple.m</file>
+      <file>${PROJECT_ROOT}/read_data_bruker.m</file>
+      <file>${PROJECT_ROOT}/simple_norminv.m</file>
+      <file>${PROJECT_ROOT}/wgn_dj.m</file>
+    </fileset.depfun>
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}/SAN_plot_from_bruker_data/for_testing" name="SAN_plot_from_bruker_data.app" optional="false">/Volumes/san256/users_for_mac_system_macPro/jeannerat/mygit/san-plot/SAN_plot_from_bruker_data/for_testing/SAN_plot_from_bruker_data.app</file>
+      <file location="${PROJECT_ROOT}/SAN_plot_from_bruker_data/for_testing" name="splash.png" optional="false">/Volumes/san256/users_for_mac_system_macPro/jeannerat/mygit/san-plot/SAN_plot_from_bruker_data/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/SAN_plot_from_bruker_data/for_testing" name="readme.txt" optional="true">/Volumes/san256/users_for_mac_system_macPro/jeannerat/mygit/san-plot/SAN_plot_from_bruker_data/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/SAN_plot_from_bruker_data/for_testing" name="run_SAN_plot_from_bruker_data.sh" optional="false">/Volumes/san256/users_for_mac_system_macPro/jeannerat/mygit/san-plot/SAN_plot_from_bruker_data/for_testing/run_SAN_plot_from_bruker_data.sh</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>/Applications/MATLAB_R2018b.app</root>
+      <toolboxes>
+        <toolbox name="neuralnetwork" />
+      </toolboxes>
+      <toolbox>
+        <neuralnetwork>
+          <enabled>true</enabled>
+        </neuralnetwork>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>true</unix>
+      <mac>true</mac>
+      <windows>false</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.14.2</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>maci64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

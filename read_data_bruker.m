@@ -7,8 +7,8 @@ if (nargin<4)
 end
 data=struct;
 
-k = strfind(path_short,'/');
-data.path_base='/';
+k = strfind(path_short,filesep);
+data.path_base=filesep;
 if size(k,2)>1
     data.path_base=path_short(1:k(end-1));
 end
@@ -17,20 +17,20 @@ end
 data.path=path_short;
 data.acquno=acquno;
 data.procno=procno;
-data.full_data=[ num2str(acquno)  '/' num2str(procno) ];
-list_slash=strfind(data.path,'/');
+data.full_data=[ num2str(acquno)  filesep num2str(procno) ];
+list_slash=strfind(data.path,filesep);
 l2=list_slash(1,end);
 l1=list_slash(1,end-1);
 
 data.expname=data.path((l1+1):(l2-1));
-data.expnamefullshort=[data.expname '/' num2str(acquno)  '/' num2str(procno)];
+data.expnamefullshort=[data.expname filesep num2str(acquno)  filesep num2str(procno)];
 
 si1=1;
-path=[path_short num2str(acquno) '/'];
-if exist([path '/acqus'],'file')
+path=[path_short num2str(acquno) filesep];
+if exist([path filesep 'acqus'],'file')
     data.procno=procno;
     data.acquno=acquno;
-    content=textread([path '/acqus'],'%s');
+    content=textread([path filesep 'acqus'],'%s');
     data.rg         = str2num(char(content(strmatch('##$RG=',content')+1)));
     data.ns         = str2num(char(content(strmatch('##$NS=',content')+1)));
     data.td2         = str2num(char(content(strmatch('##$TD=',content')+1)));
@@ -103,14 +103,14 @@ if exist([path '/acqus'],'file')
     data.sw2= str2num(char(content(strmatch('##$SW=',content')+1)));
     data.sw2h= str2num(char(content(strmatch('##$SW_h=',content')+1)));
     data.in= str2num(char(content(strmatch('##$IN=',content')+1)));
-        
+    
 else
-    data.file_not_found=[path '/acqus'];
+    data.file_not_found=[path filesep 'acqus'];
     disp(['file not found : ' data.file_not_found]);
 end
-if exist([path '/acqu2s'])
+if exist([path filesep 'acqu2s'])
     % read accq2s
-    content=textread([path '/acqu2s'],'%s');
+    content=textread([path filesep 'acqu2s'],'%s');
     data.fnmode         = str2num(char(content(strmatch('##$FnMODE=',content')+1)));
     data.td1         = str2num(char(content(strmatch('##$TD=',content')+1)));
     data.sw1         = str2num(char(content(strmatch('##$SW=',content')+1)));
@@ -119,8 +119,8 @@ if exist([path '/acqu2s'])
     % read procs
 end
 
-if exist([path '/pdata/' num2str(procno) '/procs'],'file')
-    content=textread([path '/pdata/' num2str(procno) '/procs'],'%s');
+if exist([path filesep 'pdata' filesep num2str(procno) filesep 'procs'],'file')
+    content=textread([path filesep 'pdata' filesep num2str(procno) filesep 'procs'],'%s');
     data.si2         = str2num(char(content(strmatch('##$SI=',content')+1)));
     data.wdw         = str2num(char(content(strmatch('##$WDW=',content')+1)));
     data.ssb         = str2num(char(content(strmatch('##$SSB=',content')+1)));
@@ -130,9 +130,9 @@ if exist([path '/pdata/' num2str(procno) '/procs'],'file')
     data.phc1         = str2num(char(content(strmatch('##$PHC1=',content')+1)));
     data.xdim         = str2num(char(content(strmatch('##$XDIM=',content')+1)));
     data.tdeff2         = str2num(char(content(strmatch('##$TDeff=',content')+1)));
-        data.sf2         = str2num(char(content(strmatch('##$SF=',content')+1)));
-        data.lb         = str2num(char(content(strmatch('##$LB=',content')+1)));
-
+    data.sf2         = str2num(char(content(strmatch('##$SF=',content')+1)));
+    data.lb         = str2num(char(content(strmatch('##$LB=',content')+1)));
+    
     data.scale2=[data.o1p+data.sw2/2:-data.sw2/data.si2:(data.o1p-data.sw2/2)+data.sw2/data.si2];
     
     si2=data.si2;
@@ -144,10 +144,10 @@ if exist([path '/pdata/' num2str(procno) '/procs'],'file')
     data.NC_proc=nc_proc_tmp;%orig value
 end
 
-     
-if exist([path '/pdata/' num2str(procno) '/proc2s'],'file')
+
+if exist([path filesep 'pdata' filesep num2str(procno) filesep 'proc2s'],'file')
     
-    content=textread([path '/pdata/' num2str(procno) '/proc2s'],'%s');
+    content=textread([path filesep 'pdata' filesep num2str(procno) filesep 'proc2s'],'%s');
     data.xdim1         = str2num(char(content(strmatch('##$XDIM=',content')+1)));
     data.si1         = str2num(char(content(strmatch('##$SI=',content')+1)));
     data.wdw1         = str2num(char(content(strmatch('##$WDW=',content')+1)));
@@ -178,9 +178,9 @@ if exist([path '/pdata/' num2str(procno) '/proc2s'],'file')
     si1=data.si1;
 end
 
-if exist([path '/pdata/' num2str(procno) '/clevels'],'file'),
+if exist([path filesep 'pdata' filesep num2str(procno) filesep 'clevels'],'file')
     
-    content=textread([path '/pdata/' num2str(procno) '/clevels'],'%s');
+    content=textread([path filesep 'pdata' filesep num2str(procno) filesep 'clevels'],'%s');
     data.MAXLEV        =str2num(char(content(strmatch('##$MAXLEV=',content')+1)));
     data.level         =str2num(char(content(strmatch('##$LEVELS=',content')+2+data.MAXLEV)));
     
@@ -199,9 +199,9 @@ if isfield(data,'ftsize')
         data.of1p=middle_of_spectrum_in_f1;
     end
 end
-   
-if exist([path '/pdata/' num2str(procno) '/proc2'],'file')
-    content=textread([path '/pdata/' num2str(procno) '/proc2'],'%s');
+
+if exist([path filesep 'pdata' filesep' num2str(procno) filesep 'proc2'],'file')
+    content=textread([path filesep 'pdata' filesep num2str(procno) filesep 'proc2'],'%s');
     data.phc01_proc2         = str2num(char(content(strmatch('##$PHC0=',content')+1)));
     data.phc11_proc2        = str2num(char(content(strmatch('##$PHC1=',content')+1)));
     data.si1_request        = str2num(char(content(strmatch('##$SI=',content')+1)));
@@ -215,13 +215,13 @@ else
     run_through_list=[0];
 end
 
-if exist([path '/pdata/' num2str(procno)  '/2rr'],'file')
+if exist([path filesep 'pdata' filesep num2str(procno) filesep '2rr'],'file')
     data.typ=1;% not hypercomplex but 2d
 end
-if exist([path '/pdata/' num2str(procno)  '/2ri'],'file')
+if exist([path filesep 'pdata' filesep num2str(procno) filesep '2ri'],'file')
     data.typ=2;%  hypercomplex but 2d
 end
-if exist([path '/pdata/' num2str(procno)  '/2ir'],'file')
+if exist([path filesep 'pdata' filesep num2str(procno) filesep '2ir'],'file')
     data.typ=2;%  hypercomplex but 2d
 end
 
@@ -235,97 +235,97 @@ for run_throug=run_through_list
             file_to_read='2ir';
         case 3
             file_to_read='2ii';
-       
+            
     end
-
-if exist([path '/pdata/' num2str(procno)  '/' file_to_read],'file')
-    if data.ftsize==0
-        nbpt1=data.td1;%xf2 data
-        % if data.fnmode==tppi_value_fnmode
-        %     spectrum=zeros(nbpt1,data.td1/2);
-        %  else
-        spectrum_in=zeros(nbpt1,data.td1);
-        
-        % end
-    else
-        nbpt1=data.si1;%xfb data
-        spectrum_in=zeros(nbpt1,si2);
-        
-    end
-    % spectrum=zeros(nbpt1,si2);
-    % spectrum=zeros(si2,si1);
     
-    file_name_to_read_now=[path '/pdata/' num2str(procno)  '/' file_to_read];
-    file_id=fopen(file_name_to_read_now);
-    disp(['Reading ' file_name_to_read_now]);
-    if data.xdim~=si2
-        disp(['Decompressed data (xdim = ' num2str(data.xdim1) ' ' num2str(data.xdim) ')'])
-    end
-    %     if data.xdim==si2
-    %         for loptd=1:nbpt1
-    %             in_r = fread(file_id ,si2,'int');
-    %             spectrum(loptd,:)=in_r;
-    %         end
-    %     else
-    
-    for l1=0:data.xdim1:(nbpt1-1)
-        for l2=1:data.xdim:si2
-            for l3=1:2:data.xdim1
-                in_1 = fread(file_id ,data.xdim,'int');
-                in_2 = fread(file_id ,data.xdim,'int');
-                % if (data.ftsize==0) && (data.fnmode==tppi_value_fnmode)% complex data
-                %     spectrum((l1+l3-1)/2+1,l2:l2+data.xdim-1)=in_1+1i*in_2;
-                %   else
-                spectrum_in(l1+l3,l2:l2+data.xdim-1)=in_1;
-                spectrum_in(l1+l3+1,l2:l2+data.xdim-1)=in_2;
-                % end
+    if exist([path filesep 'pdata' filesep num2str(procno)  filesep file_to_read],'file')
+        if data.ftsize==0
+            nbpt1=data.td1;%xf2 data
+            % if data.fnmode==tppi_value_fnmode
+            %     spectrum=zeros(nbpt1,data.td1/2);
+            %  else
+            spectrum_in=zeros(nbpt1,data.td1);
+            
+            % end
+        else
+            nbpt1=data.si1;%xfb data
+            spectrum_in=zeros(nbpt1,si2);
+            
+        end
+        % spectrum=zeros(nbpt1,si2);
+        % spectrum=zeros(si2,si1);
+        
+        file_name_to_read_now=[path filesep 'pdata' filesep num2str(procno) filesep file_to_read];
+        file_id=fopen(file_name_to_read_now);
+        disp(['Reading ' file_name_to_read_now]);
+        if data.xdim~=si2
+            disp(['Decompressed data (xdim = ' num2str(data.xdim1) ' ' num2str(data.xdim) ')'])
+        end
+        %     if data.xdim==si2
+        %         for loptd=1:nbpt1
+        %             in_r = fread(file_id ,si2,'int');
+        %             spectrum(loptd,:)=in_r;
+        %         end
+        %     else
+        
+        for l1=0:data.xdim1:(nbpt1-1)
+            for l2=1:data.xdim:si2
+                for l3=1:2:data.xdim1
+                    in_1 = fread(file_id ,data.xdim,'int');
+                    in_2 = fread(file_id ,data.xdim,'int');
+                    % if (data.ftsize==0) && (data.fnmode==tppi_value_fnmode)% complex data
+                    %     spectrum((l1+l3-1)/2+1,l2:l2+data.xdim-1)=in_1+1i*in_2;
+                    %   else
+                    spectrum_in(l1+l3,l2:l2+data.xdim-1)=in_1;
+                    spectrum_in(l1+l3+1,l2:l2+data.xdim-1)=in_2;
+                    % end
+                end
             end
         end
-    end
-    %end
-    
-    fclose(file_id);
-    if data.ftsize==0
-         switch run_throug
-            case 0
-        data.xf2data=spectrum_in/data.nc_proc;
-            case 1
-                        data.xf2data_i=spectrum_in/data.nc_proc;
-            case 2
-                        data.xf2data_i=spectrum_in/data.nc_proc;
-            case 3
-                        data.xf2data_ii=spectrum_in/data.nc_proc;
-         end
-    else
-         switch run_throug
-            case 0
-                data.spectrum=spectrum_in/data.nc_proc;
-            case 1
-                data.spectrum_ri=spectrum_in/data.nc_proc;
-            case 2
-                data.spectrum_ir=spectrum_in/data.nc_proc;
-            case 3
-                data.spectrum_ii=spectrum_in/data.nc_proc;
-         end 
-                
-       % data.spectrum=spectrum_in/data.nc_proc;
+        %end
+        
+        fclose(file_id);
+        if data.ftsize==0
+            switch run_throug
+                case 0
+                    data.xf2data=spectrum_in/data.nc_proc;
+                case 1
+                    data.xf2data_i=spectrum_in/data.nc_proc;
+                case 2
+                    data.xf2data_i=spectrum_in/data.nc_proc;
+                case 3
+                    data.xf2data_ii=spectrum_in/data.nc_proc;
+            end
+        else
+            switch run_throug
+                case 0
+                    data.spectrum=spectrum_in/data.nc_proc;
+                case 1
+                    data.spectrum_ri=spectrum_in/data.nc_proc;
+                case 2
+                    data.spectrum_ir=spectrum_in/data.nc_proc;
+                case 3
+                    data.spectrum_ii=spectrum_in/data.nc_proc;
+            end
+            
+            % data.spectrum=spectrum_in/data.nc_proc;
+        end
     end
 end
-end
-if exist([path '/pdata/' num2str(procno)  '/1r'],'file')
-    file_id=fopen([path '/pdata/' num2str(procno)  '/1r']);
+if exist([path filesep 'pdata' filesep num2str(procno) filesep '1r'],'file')
+    file_id=fopen([path filesep 'pdata' filesep num2str(procno) filesep '1r']);
     in_r = fread(file_id ,si2,'int')/nc;
     fclose(file_id);
     data.spectrum=in_r;
     data.typ=3;
 end
-if exist([path '/pdata/' num2str(procno)  '/1i'],'file')
-    file_id=fopen([path '/pdata/' num2str(procno)  '/1i']);
+if exist([path filesep 'pdata' filesep num2str(procno)  filesep '1i'],'file')
+    file_id=fopen([path filesep 'pdata' filesep num2str(procno) filesep '1i']);
     in_r = fread(file_id ,si2,'int')/nc;
     fclose(file_id);
     data.spectrum_ii=in_r;
-        data.typ=3;
-
+    data.typ=3;
+    
 end
 if isfield(data,'file_not_found')
     file_not_found=data.file_not_found;
