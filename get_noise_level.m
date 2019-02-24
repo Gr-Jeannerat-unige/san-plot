@@ -1,8 +1,15 @@
 function [ noise_level_pos, work_sp, I0_offset,  noise_level_initial, noise_level_neg, noise_level_inital_neg, ...
     how_much_higher_than_noise_are_signals,where_cut_stat,sc_pow10,val_pow10,signal_shape] ...
     = get_noise_level(data,opt)
+
+%% important constant: factor rescale for abslute value mode:
+mcfactor=1/power(10,0.25);%=0.5623
+mcfactor2=2*mcfactor*mcfactor;
+
+
 plot_also_neg=1;
 plot_results_pos_optim=0;%swich to 1 to display the optimization of the position of the distribution used to determine noise
+
 %GET_NOISE_LEVEL Determine (and optionally plot) SAN plot of a matrix of
 %experimental data
 % Determine the noise level in a 1D, 2D spectrum (or any matrix of
@@ -19,16 +26,15 @@ else
     fix_offset=1;
 end
 
-
 if nargin<1
-    % error('No data...')
     noise_level=1;
     line_broadening=0.3;
-    
-    %     noise_level=0.01;
-    %     line_broadening=0.0;
     warning(['No data were provided - the function is applied using synthetic spectrum with noise level ' num2str(noise_level)])
-    data = sim_1d_spectrum_with_noise(noise_level, line_broadening);
+    magnitude_mode=0;% determine if use magnitude mode spectrum in simulation
+    data = sim_1d_spectrum_with_noise(noise_level, line_broadening, magnitude_mode);
+    if magnitude_mode
+        opt.magnitude_mode=1;
+    end
     if fix_offset
         fix_offset=0;
         warning(['Fix offset was set to zeor for simulated spectrum ' ])
@@ -36,6 +42,17 @@ if nargin<1
 end
 signal_shape=[];%initialize output
 
+
+if ~isfield(opt,'magnitude_mode')
+    opt.magnitude_mode=0;
+end
+
+if opt.magnitude_mode
+    if fix_offset
+        fix_offset=0;
+        warning(['Fix offset was set to zeor for simulated spectrum ' ])
+    end
+end
 % this determines how far in the distribution the noise will be measure.
 % from 0.2 to 0.8...
 % With a high proportion of signals, large values may be betternormpdf
@@ -88,16 +105,12 @@ else
 end
 
 % separate pos and neg points
-%work_sp=work_sp(work_sp>0,1);%positive points
 work_sn=work_sp(find(work_sp<0),1);%negative points
 work_sp=work_sp(find(work_sp>0),1);%positive points
 
-% noise_level_initial=0;
-% noise_level_inital_neg=0;
 where_cut_stat=0.5;%to avoid error....
 if size(work_sp,1)>0
     %% addition for additional test
-    
     if (isfield(opt,'cutoff_position_for_noise_determination'))  && ( opt.cutoff_position_for_noise_determination~=0)
         where_cut_stat=opt.cutoff_position_for_noise_determination;
         disp(['Position of cutoff to measure SNR : ' num2str(where_cut_stat) '(Imposed)'])
@@ -106,29 +119,32 @@ if size(work_sp,1)>0
         where_cut_stat=determine_position_measure_SNR(work_sp,opt,plot_results_pos_optim);
         disp(['Position of cutoff to measure SNR : ' num2str(where_cut_stat) '(optimized)'])
         where_cut_stat_txt=[num2str(where_cut_stat*100) '%(opt) '];
-        
     end
+    
     %% normal program
     noise_level_initial=work_sp(round(size(work_sp,1)*where_cut_stat),1);%level of signal at half the distribution of pos signals
+    
     top_level=work_sp(1,1);
     list=find((work_sp-noise_level_initial)==0);
     coord_pt_nois_initial=[list(1,1) noise_level_initial ];
     coord_pt_nois_refined_neg =coord_pt_nois_initial;
+    
+    if opt.magnitude_mode
+        noise_level_initial=noise_level_initial*mcfactor;
+    end
     
     if size(work_sn,1)>0
         noise_level_inital_neg=-work_sn(round(size(work_sn,1)*(1-where_cut_stat)),1);
         list=size(work_sn,1)+1-find((work_sn+noise_level_inital_neg)==0);
         coord_pt_nois_initial_neg=[list(1,1) noise_level_inital_neg ];
         coord_pt_nois_refined_neg =coord_pt_nois_initial_neg;
-        
         disp(['Initial noise at ' num2str(where_cut_stat) '  pos/neg ' num2str(noise_level_initial) ' / ' num2str(noise_level_inital_neg) ])
     else
-        
         noise_level_inital_neg=0;
         disp(['Initial noise at ' num2str(where_cut_stat) ' pos (no neg) ' num2str(noise_level_initial)  ]);
     end
     
-    %refinement of noise level determination by ignoring points that arero
+    %refinement of noise level determination by ignoring points that
     %signals...
     
     noise_level_pos=noise_level_initial;
@@ -185,7 +201,9 @@ if ~skip_refinement
     where_cut_stat_eff=((where_cut_stat*size(work_sp2,1))  +b1 )/(size(work_sp2,1)+b1);%this is to take into account the points ingnored for the second calculation
     factor_corr_refined=-simple_norminv((where_cut_stat_eff)/2);
     noise_level_pos=noise_level_pos* 1/factor_corr_refined;
-    
+    if opt.magnitude_mode
+        noise_level_pos=noise_level_pos*mcfactor;
+    end
     
     where_cut_stat_eff=((where_cut_stat*size(work_sp3,1))  +b2 )/(size(work_sp3,1)+b2);%this is to take into account the points ingnored for the second calculation
     factor_corr_refined=-simple_norminv((where_cut_stat_eff)/2);
@@ -255,31 +273,28 @@ if plot_results
     end
 end
 val_pow10=work_sp(sc_pow10);
-% %     % plot symulated gaussian noise pos.
-% %    % noise= noise_level*awgn_dj(work_sp*0,0);
-% %  %   noise= noise_level*awgn(work_sp(1:end,:)*0,0);
-% %     noise= noise_level_to_plot_only*awgn(work_sp(b1:end,:)*0,0);
-% %     noise=abs(noise);
-% %     noise=sort(noise,'descend');
-% %     loglog(b1+[1:size(noise,1)],noise','k--','DisplayName',['Syntetic noise (pos.)']);
-% %   %  loglog([1:size(noise,1)],noise','m--','DisplayName',['Syntetic noise (pos.)']);
-% %   %  loglog(sc_pow10,noise(sc_pow10),'m--','DisplayName',['Synthetic noise (pos.)']);
+
 if ~isfield(opt,'take_window_function_into_account')
     opt.take_window_function_into_account=1;
 end
+%% force it when possible
 opt.take_window_function_into_account=1;
+
 if ~skip_refinement
     
     if opt.take_window_function_into_account%DEVEL
-        %DEVEL
         [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sp,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
-        noise_array= noise_level_pos*noise_array;%DEVEL
-        %DEVEL
-        % noise_array=noise_array/correction_due_to_window_function;%DEVEL
-        %DEVEL
-        %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
+        if opt.magnitude_mode%DEVEL
+            noise_array=power(noise_array,sqrt(2)/2);%DEVEL
+            noise_array= noise_array/mcfactor2;%DEVEL
+        end%DEVEL
+       noise_array= noise_level_pos*noise_array;%DEVEL
     else%DEVEL
         noise_array= noise_level_pos*awgn_dj(work_sp*0,0);
+         if opt.magnitude_mode
+            noise_array=power(noise_array,sqrt(2)/2);
+            noise_array= noise_array/mcfactor2;
+         end
         noise_array=abs(noise_array);
         noise_array=sort(noise_array,'descend');
         correction_due_to_window_function=1;
@@ -295,19 +310,24 @@ if ~skip_refinement
     end
 end
 
-% plot symulated gaussian noise pos.
-% noise= noise_level*awgn_dj(work_sp*0,0);
-
 if opt.take_window_function_into_account%DEVEL
     %DEVEL
     [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sp,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
-    noise_array= noise_level_initial*noise_array;%DEVEL
+    if opt.magnitude_mode%DEVEL
+            noise_array=power(noise_array,sqrt(2)/2);%DEVEL
+            noise_array= noise_array/mcfactor2;%DEVEL
+        end%DEVEL
+            noise_array= noise_level_initial*noise_array;%DEVEL
     %DEVEL
     % noise_array=noise_array/correction_due_to_window_function;%DEVEL
     %DEVEL
     %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
 else%DEVEL
     noise_array= noise_level_initial*awgn_dj(work_sp*0,0);
+    if opt.magnitude_mode
+        noise_array=power(noise_array,sqrt(2)/2);
+        noise_array= noise_level_pos*noise_array/mcfactor2;
+    end
     noise_array=abs(noise_array);
     noise_array=sort(noise_array,'descend');
     correction_due_to_window_function=1;
@@ -324,23 +344,7 @@ if plot_results
         num2str(noise_level_initial/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
         num2str(noise_level_initial,'%.0f')]);
 end
-%% to be removed... compare with previous curves
-%     if ~skip_refinement
-%         % negative noise plot
-%         % noise= noise_leveln*awgn_dj(work_sn*0,0);
-%         if plot_results
-%
-%             noise_array= noise_level_pos*awgn_dj(work_sp*0,0);
-%             noise_array=abs(noise_array);
-%             noise_array=sort(noise_array,'descend');
-%
-%
-%
-%             % loglog(noise,'r--','DisplayName',['Syntetic noise (neg.)']);
-%             figure(fig_number_main)
-%             loglog(sc_pow10,noise_array(sc_pow10),'m:','DisplayName',['Synthetic noise (neg.) norm dis no corr window ']);
-%         end
-%     end
+
 
 %% plot negative
 log_refn=-flipud(work_sn);%-I0_offset;
@@ -356,7 +360,6 @@ if size(sca,2)>2
     end
     if ~skip_refinement
         % negative noise plot
-        % noise= noise_leveln*awgn_dj(work_sn*0,0);
         if opt.take_window_function_into_account%DEVEL
             %DEVEL
             [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sn,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
@@ -383,20 +386,12 @@ if size(sca,2)>2
         end
     end
     
-    
-    
     % negative noise plot
-    % noise= noise_leveln*awgn_dj(work_sn*0,0);
-    %noise_array= noise_level_inital_neg*awgn_dj(work_sn*0,0);
     
     if opt.take_window_function_into_account%DEVEL
         %DEVEL
         [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sn,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
         noise_array= noise_level_inital_neg*noise_array;%DEVEL
-        %DEVEL
-        % noise_array=noise_array/correction_due_to_window_function;%DEVEL
-        %DEVEL
-        %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
     else%DEVEL
         noise_array= noise_level_inital_neg*awgn_dj(work_sn*0,0);
         noise_array=abs(noise_array);
@@ -404,16 +399,12 @@ if size(sca,2)>2
         correction_due_to_window_function=1;
         
     end%DEVEL
-    % loglog(noise,'r--','DisplayName',['Syntetic noise (neg.)']);
     if plot_results
         figure(fig_number_main)
         loglog(sc_pow10,noise_array(sc_pow10),'r:','DisplayName',['N^- Initial ' ...
             num2str(noise_level_inital_neg/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
             num2str(noise_level_inital_neg,'%.0f')]);
-        
     end
-    
-    
 end
 
 
