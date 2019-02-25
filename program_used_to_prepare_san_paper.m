@@ -117,29 +117,28 @@ Full_list=[Full_list [ 0 20]];
            
             dataset='dj-caryophyllene_oxide';%mp_hap_benzoap_f2dec
             exp_name=['/Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/' dataset '/'];
-            exp_no=11 ;%list of experiments to compare 21 was ns 1
+            exp_no=11 ;
             exp_procno=1;
-                            last=1;
+            last=1;
 
         case 12%COSY
             
             dataset='dj-caryophyllene_oxide';%mp_hap_benzoap_f2dec
             exp_name=['/Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/' dataset '/'];
-            exp_no=13 ;%list of experiments to compare 21 was ns 1
+            exp_no=13 ;
             exp_procno=1;
             opt.fix_offset=0;% THIS IS QF NO OFFSET CORRECTION
-                            last=1;
+            last=1;
 
-        case 13%1D dept magnitude...
+        case {13}%1D dept magnitude...
             
             dataset='dj-caryophyllene_oxide';%mp_hap_benzoap_f2dec
             exp_name=['/Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/' dataset '/'];
-            exp_no=12 ;%list of experiments to compare 21 was ns 1
+            exp_no=12 ;
             exp_procno=1;
-            magnitude=1;
-            opt.fix_offset=0;% THIS IS MC NO OFFSET CORRECTION
+%             magnitude=1;
+%             opt.fix_offset=0;% THIS IS MC NO OFFSET CORRECTION
             if loop_over_spectra==13
-                
                 last=1;
             end
         case {14, 15, 16, 17}%HSQC
@@ -316,7 +315,7 @@ Full_list=[Full_list [ 0 20]];
             end
             
             disp(['--------------------------------------------------------------------------------------------------------- ' num2str(loop_over_spectra) ])
-            disp(['Working on spectrum  ' dataset ' ' num2str(exp_no) '/pdata/' num2str(exp_procno)  ' ' data_set.pulprog])
+            disp(['(' num2str(loop_over_spectra) ') Working on spectrum  ' dataset ' ' num2str(exp_no) '/pdata/' num2str(exp_procno)  ' ' data_set.pulprog])
             if exist('limit_chemical_shift_f2','var')
                 data_set.limit_chemical_shift_f2=limit_chemical_shift_f2;
             end
@@ -342,18 +341,6 @@ Full_list=[Full_list [ 0 20]];
              %   opt.show_shape=1;
                 opt.show_window=1;
                 
-                %                 if loop_over_spectra<0
-                %                     opt.show_window=1;
-                %                 end
-                %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%
                 %%%%%%%%%%%%%%%%%%%%
                 %%%%%%%%%%%%%%%%%%%%
                 [data_set.noise_level, data_set.list_peaks, data_set.I0_offset, data_set.noise_levela , data_set.noise_leveln , data_set.noise_levelan, ...
@@ -362,12 +349,9 @@ Full_list=[Full_list [ 0 20]];
                 %% correct the spectrum
                 data_set.spectrum= data_set.spectrum-data_set.I0_offset;
                 
-                
                 %%%%%%%%%%%%%%%%%%%%
                 %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%
-                %%%%%%%%%%%%%%%%%%%%
-                
+            
                 if ~exist('supp_ti','var')
                     supp_ti=[num2str(data_set.acquno) '/' num2str(data_set.procno)];
                 end

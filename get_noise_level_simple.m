@@ -1,21 +1,36 @@
 function [ noise_level_pos, work_sp, I0_offset,  noise_level_initial, noise_level_neg, noise_level_inital_neg, ...
     how_much_higher_than_noise_are_signals,where_cut_stat,sc_pow10,val_pow10,signal_shape] ...
     = get_noise_level_simple(data,opt)
+%GET_NOISE_LEVEL Determine (and optionally plot) SAN plot of a matrix of
+% experimental data
+% Determine the noise level in a 1D, 2D spectrum (or any matrix of
+% datapoints)
+% The noise level is set to value at midpoint (or in some cases further in
+% the series) of the distribution of the pos/neg points
+% This considering that  signals are representing a relatively small part
+% of the spectrum... which is case when taking full high-res 2D spectra,
+% 1D 13C spectra, less true for 1D 1H spectrum
 
-%% important constant: factor rescale for abslute value mode:
-mcfactor=1/power(10,0.25);%=0.5623
-mcfactor2=2*mcfactor*mcfactor;
+%% important constant: for absolute value mode data
+% When measure a noise level from absolute value data, the value that
+% would have been optained without mc mode would have been smaller.
+% Multiply by...
+mcfactor_correction=sqrt(1/pi);%=0.5642
 
+% When a spectrum processed in the magnitude mode, the noise increases and the distribution is not a white gaussian anymore.
+% The value obtained assuming white gaussian distribution has to be divided
+% by sqrt(pi) to return the value which would have been optained using only
+% the real component of the spectrum.
+% The white gaussian noise generated using this corected noise level has to be
+% taken to the power 1/sqrt(2) and multiplied by pi/2 to match the curve of
+% the mc mode data.
+facpow_conv_norm_to_abs_dist=sqrt(2)/2;% =1/sqrt(2)
+fac_conv_norm_to_abs_dist=pi/2;
 
+%% plot parameter
 plot_also_neg=1;
 plot_results_pos_optim=0;%swich to 1 to display the optimization of the position of the distribution used to determine noise
 
-%GET_NOISE_LEVEL Determine (and optionally plot) SAN plot of a matrix of
-%experimental data
-% Determine the noise level in a 1D, 2D spectrum (or any matrix of
-% datapoints)
-% The noise level is set to value at midpoint (or in some cases further in the series) of the distribution of the pos/neg points
-% This considering that  signals are representing a relatively small part of the spectrum... which is case when taking full high-res 2D spectra, 1D 13C spectra, less true for 1D 1H spectrum
 if nargin<2
     opt=struct; %define opt if not present in the input. Default will be applied
 end
@@ -29,15 +44,15 @@ end
 if nargin<1
     noise_level=1;
     line_broadening=0.3;
-    warning(['No data were provided - the function is applied using synthetic spectrum with noise level ' num2str(noise_level)])
-    magnitude_mode=0;% determine if use magnitude mode spectrum in simulation
+    warning(['No data were provided - the function is applied on a synthetic spectrum with noise level ' num2str(noise_level) ' and line broadening of ' num2str(line_broadening) ' Hz.'])
+    magnitude_mode=1;% determine if use magnitude mode spectrum in simulation
     data = sim_1d_spectrum_with_noise(noise_level, line_broadening, magnitude_mode);
     if magnitude_mode
-        opt.magnitude_mode=1;
+        warning('Spectrum generated in magnitude mod');
     end
     if fix_offset
         fix_offset=0;
-        warning(['Fix offset was set to zeor for simulated spectrum ' ])
+        warning('fix_offset was set to zero this simulated spectrum (assume perfect baseline).')
     end
 end
 signal_shape=[];%initialize output
@@ -46,11 +61,26 @@ signal_shape=[];%initialize output
 if ~isfield(opt,'magnitude_mode')
     opt.magnitude_mode=0;
 end
+%PH_mod is tested here:
+if isfield(data,'ph_mod')% 0:no 1:pk 2:mc 3:ps
+    if data.ph_mod==2
+        disp('Identified spectrum as processed in the magnitude mode')
+        opt.magnitude_mode=1;
+    end
+    if data.ph_mod==3
+        disp('Identified spectrum as processed in the power mode')
+        disp('taking sqrt of the spectrum prior to analysis')
+        warning('This option has not been properly tested')
+        opt.magnitude_mode=1;
+        data.spectrum=sqrt(data.spectrum);
+    end
+end
+
 
 if opt.magnitude_mode
     if fix_offset
         fix_offset=0;
-        warning(['Fix offset was set to zeor for simulated spectrum ' ])
+        warning(['Fix offset was set to zero for the absolute value mode spectrum.' ])
     end
 end
 % this determines how far in the distribution the noise will be measure.
@@ -130,7 +160,7 @@ if size(work_sp,1)>0
     coord_pt_nois_refined_neg =coord_pt_nois_initial;
     
     if opt.magnitude_mode
-        noise_level_initial=noise_level_initial*mcfactor;
+        noise_level_initial=noise_level_initial*mcfactor_correction;
     end
     
     if size(work_sn,1)>0
@@ -202,7 +232,7 @@ if ~skip_refinement
     factor_corr_refined=-simple_norminv((where_cut_stat_eff)/2);
     noise_level_pos=noise_level_pos* 1/factor_corr_refined;
     if opt.magnitude_mode
-        noise_level_pos=noise_level_pos*mcfactor;
+        noise_level_pos=noise_level_pos*mcfactor_correction;
     end
     
     where_cut_stat_eff=((where_cut_stat*size(work_sp3,1))  +b2 )/(size(work_sp3,1)+b2);%this is to take into account the points ingnored for the second calculation
@@ -233,6 +263,9 @@ if I0_offset==0
     offset_text=[' No I offset correction (would have been : ' num2str(I_mid_distrib) ')'];
 else
     offset_text=[' Ioff_corr ' num2str(I0_offset) '(noise +/- : ' num2str(noise_level_pos) '/' num2str(noise_level_neg) ')'];
+end
+if opt.magnitude_mode
+    offset_text=[' Sp in Magn. Mode (data as if non-MC)'];
 end
 % plotting
 if plot_results
@@ -283,10 +316,10 @@ opt.take_window_function_into_account=1;
 if ~skip_refinement
     
         noise_array= noise_level_pos*awgn_dj(work_sp*0,0);
-         if opt.magnitude_mode
-            noise_array=power(noise_array,sqrt(2)/2);
-            noise_array= noise_array/mcfactor2;
-         end
+        if opt.magnitude_mode
+            noise_array=power(noise_array,facpow_conv_norm_to_abs_dist);
+            noise_array= noise_array*fac_conv_norm_to_abs_dist;
+        end
         noise_array=abs(noise_array);
         noise_array=sort(noise_array,'descend');
         correction_due_to_window_function=1;
@@ -302,8 +335,8 @@ end
 
     noise_array= noise_level_initial*awgn_dj(work_sp*0,0);
     if opt.magnitude_mode
-        noise_array=power(noise_array,sqrt(2)/2);
-        noise_array= noise_level_pos*noise_array/mcfactor2;
+        noise_array=power(noise_array,facpow_conv_norm_to_abs_dist);
+        noise_array= noise_level_pos*noise_array*fac_conv_norm_to_abs_dist;
     end
     noise_array=abs(noise_array);
     noise_array=sort(noise_array,'descend');

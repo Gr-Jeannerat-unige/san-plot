@@ -111,6 +111,7 @@ end
 if exist([path filesep 'acqu2s'])
     % read accq2s
     content=textread([path filesep 'acqu2s'],'%s');
+    data.ph_mod         = str2num(char(content(strmatch('##$PH_mod=',content')+1)));
     data.fnmode         = str2num(char(content(strmatch('##$FnMODE=',content')+1)));
     data.td1         = str2num(char(content(strmatch('##$TD=',content')+1)));
     data.sw1         = str2num(char(content(strmatch('##$SW=',content')+1)));
