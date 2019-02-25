@@ -136,8 +136,8 @@ Full_list=[Full_list [ 0 20]];
             exp_name=['/Volumes/lacie_case/nmr_data/nmrge500_3/data/jeannerat/data/nmr/nmr/' dataset '/'];
             exp_no=12 ;
             exp_procno=1;
-%             magnitude=1;
-%             opt.fix_offset=0;% THIS IS MC NO OFFSET CORRECTION
+             magnitude=1;
+            opt.fix_offset=0;% THIS IS MC NO OFFSET CORRECTION
             if loop_over_spectra==13
                 last=1;
             end
@@ -334,6 +334,7 @@ Full_list=[Full_list [ 0 20]];
                 data_set.roi_lineshape_deconvolution=roi_lineshape_deconvolution;%
             end%
             
+                opt.magnitude_mode=magnitude;
                 [sc_pow10_window,val_pow10_window]=demo_wind(data_set);%just display
                 
                 %% determine noise level

@@ -12,18 +12,15 @@ function [ noise_level_pos, work_sp, I0_offset,  noise_level_initial, noise_leve
 % 1D 13C spectra, less true for 1D 1H spectrum
 
 %% important constant: for absolute value mode data
-% When measure a noise level from absolute value data, the value that
-% would have been optained without mc mode would have been smaller.
-% Multiply by...
-mcfactor_correction=sqrt(1/pi);%=0.5642
-
-% When a spectrum processed in the magnitude mode, the noise increases and the distribution is not a white gaussian anymore.
+% When a spectrum is processed in the magnitude mode, the noise increases 
+% and the distribution is not a white gaussian anymore.
 % The value obtained assuming white gaussian distribution has to be divided
 % by sqrt(pi) to return the value which would have been optained using only
 % the real component of the spectrum.
 % The white gaussian noise generated using this corected noise level has to be
 % taken to the power 1/sqrt(2) and multiplied by pi/2 to match the curve of
 % the mc mode data.
+mcfactor_noise_level_correction=sqrt(1/pi);%=0.5642
 facpow_conv_norm_to_abs_dist=sqrt(2)/2;% =1/sqrt(2)
 fac_conv_norm_to_abs_dist=pi/2;
 
@@ -58,31 +55,35 @@ end
 signal_shape=[];%initialize output
 
 
-if ~isfield(opt,'magnitude_mode')
+if (~isfield(opt,'magnitude_mode')) && (~isfield(opt,'magnitude_mode'))
     opt.magnitude_mode=0;
 end
 %PH_mod is tested here:
 if isfield(data,'ph_mod')% 0:no 1:pk 2:mc 3:ps
     if data.ph_mod==2
-        disp('Identified spectrum as processed in the magnitude mode')
+        disp('Identified spectrum as processed in the magnitude mode (or requested to be processed as mc mode).')
         opt.magnitude_mode=1;
     end
     if data.ph_mod==3
         disp('Identified spectrum as processed in the power mode')
-        disp('taking sqrt of the spectrum prior to analysis')
+        disp('Taking the sqrt of the spectrum prior to analysis ...')
         warning('This option has not been properly tested')
         opt.magnitude_mode=1;
         data.spectrum=sqrt(data.spectrum);
     end
 end
-
-
 if opt.magnitude_mode
     if fix_offset
         fix_offset=0;
         warning(['Fix offset was set to zero for the absolute value mode spectrum.' ])
     end
 end
+if opt.magnitude_mode
+    color_n='c';
+else
+    color_n='b';
+end
+
 % this determines how far in the distribution the noise will be measure.
 % from 0.2 to 0.8...
 % With a high proportion of signals, large values may be betternormpdf
@@ -160,7 +161,7 @@ if size(work_sp,1)>0
     coord_pt_nois_refined_neg =coord_pt_nois_initial;
     
     if opt.magnitude_mode
-        noise_level_initial=noise_level_initial*mcfactor_correction;
+        noise_level_initial=noise_level_initial*mcfactor_noise_level_correction;
     end
     
     if size(work_sn,1)>0
@@ -232,7 +233,7 @@ if ~skip_refinement
     factor_corr_refined=-simple_norminv((where_cut_stat_eff)/2);
     noise_level_pos=noise_level_pos* 1/factor_corr_refined;
     if opt.magnitude_mode
-        noise_level_pos=noise_level_pos*mcfactor_correction;
+        noise_level_pos=noise_level_pos*mcfactor_noise_level_correction;
     end
     
     where_cut_stat_eff=((where_cut_stat*size(work_sp3,1))  +b2 )/(size(work_sp3,1)+b2);%this is to take into account the points ingnored for the second calculation
@@ -265,7 +266,9 @@ else
     offset_text=[' Ioff_corr ' num2str(I0_offset) '(noise +/- : ' num2str(noise_level_pos) '/' num2str(noise_level_neg) ')'];
 end
 if opt.magnitude_mode
-    offset_text=[' Sp in Magn. Mode (data as if non-MC)'];
+    warning_mc_txt=[' Sp in Magn. Mode (data as if non-MC)'];
+else
+    warning_mc_txt=[''];
 end
 % plotting
 if plot_results
@@ -327,7 +330,7 @@ if ~skip_refinement
     %  loglog([1:size(noise,1)],noise','m--','DisplayName',['Syntetic noise (pos.)']);
     if plot_results
         figure(fig_number_main)
-        loglog(sc_pow10,noise_array(sc_pow10),'b--','DisplayName',['N^+ Refined ' ...
+        loglog(sc_pow10,noise_array(sc_pow10),[color_n '--'],'DisplayName',['N^+ Refined ' ...
             num2str(noise_level_pos/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
             num2str(noise_level_pos,'%.0f')]);
     end
@@ -344,11 +347,10 @@ end
 %
 
 %correction_due_to_window_function=1/(1/factor_corr*lev/noise_level_initial);
-
 % loglog(noise,'k-','DisplayName',['Syntetic noise (pos.)']);
 if plot_results
     figure(fig_number_main)
-    loglog(sc_pow10,noise_array(sc_pow10),'b:','DisplayName',['N^+ Initial ' ...
+    loglog(sc_pow10,noise_array(sc_pow10),[color_n ':'],'DisplayName',['N^+ Initial ' ...
         num2str(noise_level_initial/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
         num2str(noise_level_initial,'%.0f')]);
 end
@@ -490,7 +492,7 @@ if plot_results
     fig= figure(fig_number_main);
     legend('Location','SouthWest');
     legend('Location','NorthEast');
-    title([num2str(data.expname) ' ' num2str(data.acquno)  ' ' num2str(data.procno)  ' (' data.pulprog(2:end-1) ') SINO(Max/2xN)=' num2str(work_sp(1,1)/(2*noise_level_pos),'%.1f')]);
+    title([num2str(data.expname) ' ' num2str(data.acquno)  ' ' num2str(data.procno)  ' (' data.pulprog(2:end-1) ') SINO(Max/2xN)=' num2str(work_sp(1,1)/(2*noise_level_pos),'%.1f') ' ' warning_mc_txt]);
     
     set(findall(gca, 'Type', 'Line'),'LineWidth',1.5);
     orient(fig,'landscape')

@@ -111,7 +111,6 @@ end
 if exist([path filesep 'acqu2s'])
     % read accq2s
     content=textread([path filesep 'acqu2s'],'%s');
-    data.ph_mod         = str2num(char(content(strmatch('##$PH_mod=',content')+1)));
     data.fnmode         = str2num(char(content(strmatch('##$FnMODE=',content')+1)));
     data.td1         = str2num(char(content(strmatch('##$TD=',content')+1)));
     data.sw1         = str2num(char(content(strmatch('##$SW=',content')+1)));
@@ -149,6 +148,7 @@ end
 if exist([path filesep 'pdata' filesep num2str(procno) filesep 'proc2s'],'file')
     
     content=textread([path filesep 'pdata' filesep num2str(procno) filesep 'proc2s'],'%s');
+    data.ph_mod         = str2num(char(content(strmatch('##$PH_mod=',content')+1)));
     data.xdim1         = str2num(char(content(strmatch('##$XDIM=',content')+1)));
     data.si1         = str2num(char(content(strmatch('##$SI=',content')+1)));
     data.wdw1         = str2num(char(content(strmatch('##$WDW=',content')+1)));
