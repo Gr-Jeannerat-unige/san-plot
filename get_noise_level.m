@@ -36,7 +36,7 @@ if nargin<1
     noise_level=1;
     line_broadening=0.3;
     warning(['No data were provided - the function is applied on a synthetic spectrum with noise level ' num2str(noise_level) ' and line broadening of ' num2str(line_broadening) ' Hz.'])
-    magnitude_mode=1;% determine if use magnitude mode spectrum in simulation
+    magnitude_mode=0;% determine if use magnitude mode spectrum in simulation
     data = sim_1d_spectrum_with_noise(noise_level, line_broadening, magnitude_mode);
     if magnitude_mode
         warning('Spectrum generated in magnitude mod');
