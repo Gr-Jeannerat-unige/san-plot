@@ -15,14 +15,8 @@ function [ noise_level_pos, work_sp, I0_offset,  noise_level_initial, noise_leve
 % When a spectrum is processed in the magnitude mode, the noise increases 
 % and the distribution is not a white gaussian anymore.
 % The value obtained assuming white gaussian distribution has to be divided
-% by sqrt(pi) to return the value which would have been optained using only
-% the real component of the spectrum.
-% The white gaussian noise generated using this corected noise level has to be
-% taken to the power 1/sqrt(2) and multiplied by pi/2 to match the curve of
-% the mc mode data.
-mcfactor_noise_level_correction=sqrt(1/pi);%=0.5642
-facpow_conv_norm_to_abs_dist=sqrt(2)/2;% =1/sqrt(2)
-fac_conv_norm_to_abs_dist=pi/2;
+% by 2
+mcfactor_noise_level_correction=0.5;
 
 %% plot parameter
 plot_also_neg=1;
@@ -42,7 +36,7 @@ if nargin<1
     noise_level=1;
     line_broadening=0.3;
     warning(['No data were provided - the function is applied on a synthetic spectrum with noise level ' num2str(noise_level) ' and line broadening of ' num2str(line_broadening) ' Hz.'])
-    magnitude_mode=0;% determine if use magnitude mode spectrum in simulation
+    magnitude_mode=1;% determine if use magnitude mode spectrum in simulation
     data = sim_1d_spectrum_with_noise(noise_level, line_broadening, magnitude_mode);
     if magnitude_mode
         warning('Spectrum generated in magnitude mod');
@@ -315,22 +309,14 @@ if ~isfield(opt,'take_window_function_into_account')
 end
 %% force it when possible
 opt.take_window_function_into_account=1;
-
+flag=opt.magnitude_mode;
 if ~skip_refinement
     
     if opt.take_window_function_into_account%DEVEL
-        [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sp,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
-        if opt.magnitude_mode%DEVEL
-            noise_array=power(noise_array,facpow_conv_norm_to_abs_dist);%DEVEL
-            noise_array= noise_array*fac_conv_norm_to_abs_dist;%DEVEL
-        end%DEVEL
+        [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sp,1),flag) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
         noise_array= noise_level_pos*noise_array;%DEVEL
     else%DEVEL
-        noise_array= noise_level_pos*awgn_dj(work_sp*0,0);
-        if opt.magnitude_mode
-            noise_array=power(noise_array,facpow_conv_norm_to_abs_dist);
-            noise_array= noise_array*fac_conv_norm_to_abs_dist;
-        end
+        noise_array= noise_level_pos*awgn_dj(work_sp*0,0,1*flag);
         noise_array=abs(noise_array);
         noise_array=sort(noise_array,'descend');
         correction_due_to_window_function=1;
@@ -348,22 +334,18 @@ end
 
 if opt.take_window_function_into_account%DEVEL
     %DEVEL
-    [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sp,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
-    if opt.magnitude_mode%DEVEL
-        noise_array=power(noise_array,facpow_conv_norm_to_abs_dist);%DEVEL
-        noise_array= noise_array*fac_conv_norm_to_abs_dist;%DEVEL
-    end%DEVEL
+    [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sp,1),flag) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
+%     if opt.magnitude_mode%DEVEL
+%         noise_array=power(noise_array,facpow_conv_norm_to_abs_dist);%DEVEL
+%         noise_array= noise_array*fac_conv_norm_to_abs_dist;%DEVEL
+%     end%DEVEL
     noise_array= noise_level_initial*noise_array;%DEVEL
     %DEVEL
     % noise_array=noise_array/correction_due_to_window_function;%DEVEL
     %DEVEL
     %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
 else%DEVEL
-    noise_array= noise_level_initial*awgn_dj(work_sp*0,0);
-    if opt.magnitude_mode
-        noise_array=power(noise_array,facpow_conv_norm_to_abs_dist);
-        noise_array= noise_level_pos*noise_array*fac_conv_norm_to_abs_dist;
-    end
+    noise_array= noise_level_initial*awgn_dj(work_sp*0,0,flag);
     noise_array=abs(noise_array);
     noise_array=sort(noise_array,'descend');
     correction_due_to_window_function=1;
@@ -397,14 +379,14 @@ if size(sca,2)>2
         % negative noise plot
         if opt.take_window_function_into_account%DEVEL
             %DEVEL
-            [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sn,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
+            [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sn,1),flag) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
             noise_array= noise_level_neg*noise_array;%DEVEL
             %DEVEL
             % noise_array=noise_array/correction_due_to_window_function;%DEVEL
             %DEVEL
             %noise_array=noise_array(1:size(work_sp,1),:);%DEVEL
         else%DEVEL
-            noise_array= noise_level_neg*awgn_dj(work_sn*0,0);
+            noise_array= noise_level_neg*awgn_dj(work_sn*0,0,flag);
             noise_array=abs(noise_array);
             noise_array=sort(noise_array,'descend');
             correction_due_to_window_function=1;
@@ -425,10 +407,10 @@ if size(sca,2)>2
     
     if opt.take_window_function_into_account%DEVEL
         %DEVEL
-        [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sn,1)) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
+        [correction_due_to_window_function, noise_array]=get_correction_due_to_window_function(data, where_cut_stat,size(work_sn,1),flag) ;%1/(1/factor_corr*lev/noise_level_initial);%DEVEL
         noise_array= noise_level_inital_neg*noise_array;%DEVEL
     else%DEVEL
-        noise_array= noise_level_inital_neg*awgn_dj(work_sn*0,0);
+        noise_array= noise_level_inital_neg*awgn_dj(work_sn*0,0,flag);
         noise_array=abs(noise_array);
         noise_array=sort(noise_array,'descend');
         correction_due_to_window_function=1;

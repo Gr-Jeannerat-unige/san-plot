@@ -1,4 +1,7 @@
-function [correction_due_to_window_function, noise_arrayk]=get_correction_due_to_window_function(data, where_cut_stat,nb_pt)
+function [correction_due_to_window_function, noise_arrayk]=get_correction_due_to_window_function(data, where_cut_stat,nb_pt,magnitude_mode)
+if nargin<4
+    magnitude_mode=0;
+end
 if isfield(data,'td1')
     td1=data.td1;
     one_d=0;
@@ -58,12 +61,20 @@ noise_array=noise_array.*w2;%apply window function
 noise_arrayo(:,1)=noise_arrayo(:,1)/2;%divide by two first point
 noise_array (:,1)=noise_array (:,1)/2;%divide by two first point
 if ~one_d
-    noise_arrayo=real(fftshift(ifft(noise_arrayo,size(data.spectrum,2),2)));
-    noise_array =real(fftshift(ifft(noise_array ,size(data.spectrum,2),2)));
+    noise_arrayo=(fftshift(ifft(noise_arrayo,size(data.spectrum,2),2)));
+    noise_array =(fftshift(ifft(noise_array ,size(data.spectrum,2),2)));
 else
-    noise_arrayo=real(fftshift(ifft(noise_arrayo,size(data.spectrum,1),2)));
-    noise_array =real(fftshift(ifft(noise_array ,size(data.spectrum,1),2)));
+    noise_arrayo=(fftshift(ifft(noise_arrayo,size(data.spectrum,1),2)));
+    noise_array =(fftshift(ifft(noise_array ,size(data.spectrum,1),2)));
 end
+if magnitude_mode%r = sqrt(randn(sizeOut,'like',b).^2 + randn(sizeOut,'like',b).^2) .* b;
+    noise_arrayo=sqrt(real(noise_arrayo).^2 + imag(noise_arrayo).^2);
+    noise_array =sqrt(real(noise_array ).^2 + imag(noise_array ).^2);
+else
+    noise_arrayo=real(noise_arrayo);
+    noise_array =real(noise_array);
+end
+    
 noise_arrayo=reshape(noise_arrayo,size(noise_arrayo,1)*size(noise_arrayo,2),1);
 noise_array =reshape(noise_array ,size(noise_array ,1)*size(noise_array ,2),1);
 %   factor_corr=1;
@@ -76,9 +87,12 @@ noise_arrayk=abs(noise_array);
 noise_array=sort(noise_arrayk,'descend');
 noise_arrayo=abs(noise_arrayo);
 noise_arrayo=sort(noise_arrayo,'descend');
-lev =noise_array (round(size(noise_array ,1)*where_cut_stat));
+lev =noise_array (round(size(noise_array ,1)*where_cut_stat));%norm because of taking more points with abs for non-magnitude...
 levo=noise_arrayo(round(size(noise_arrayo,1)*where_cut_stat));
-
+if magnitude_mode
+    lev =lev /2;
+    levo=levo/2;
+end
 correction_due_to_window_function=lev/levo;
 %  correction_due_to_window_function=factor_corr/levo;
 pos_list=round([1:nb_pt]*(size(noise_arrayk,1)/nb_pt));
