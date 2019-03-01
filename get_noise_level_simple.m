@@ -1,4 +1,4 @@
-function [ noise_level_pos, work_sp, I0_offset,  noise_level_initial, noise_level_neg, noise_level_inital_neg, ...
+function [ noise_level_pos, work_sp, I0_offset,  noise_level_initial, noise_level_neg, noise_level_initial_neg, ...
     how_much_higher_than_noise_are_signals,where_cut_stat,sc_pow10,val_pow10,signal_shape] ...
     = get_noise_level_simple(data,opt)
 %GET_NOISE_LEVEL Determine (and optionally plot) SAN plot of a matrix of
@@ -11,13 +11,7 @@ function [ noise_level_pos, work_sp, I0_offset,  noise_level_initial, noise_leve
 % of the spectrum... which is case when taking full high-res 2D spectra,
 % 1D 13C spectra, less true for 1D 1H spectrum
 
-%% important constant: for absolute value mode data
-% When a spectrum is processed in the magnitude mode, the noise increases 
-% and the distribution is not a white gaussian anymore.
-% The value obtained assuming white gaussian distribution has to be divided
-% by 2
-mcfactor_noise_level_correction=0.5;
-
+force_to_calculate_with_window_function=1;
 %% plot parameter
 plot_also_neg=1;
 plot_results_pos_optim=0;%swich to 1 to display the optimization of the position of the distribution used to determine noise
@@ -39,11 +33,11 @@ if nargin<1
     magnitude_mode=0;% determine if use magnitude mode spectrum in simulation
     data = sim_1d_spectrum_with_noise(noise_level, line_broadening, magnitude_mode);
     if magnitude_mode
-        warning('Spectrum generated in magnitude mod');
+        warning('Spectrum was requested to be generated in the magnitude mode');
     end
     if fix_offset
         fix_offset=0;
-        warning('fix_offset was set to zero this simulated spectrum (assume perfect baseline).')
+        disp('The variable fix_offset was set to zero for this simulated spectrum (assume perfect baseline).')
     end
 end
 signal_shape=[];%initialize output
@@ -55,13 +49,13 @@ end
 %PH_mod is tested here:
 if isfield(data,'ph_mod')% 0:no 1:pk 2:mc 3:ps
     if data.ph_mod==2
-        disp('Identified spectrum as processed in the magnitude mode (or requested to be processed as mc mode).')
+        disp('Identified spectrum as processed in the magnitude mode (or requested to be processed as such).')
         opt.magnitude_mode=1;
     end
     if data.ph_mod==3
         disp('Identified spectrum as processed in the power mode')
         disp('Taking the sqrt of the spectrum prior to analysis ...')
-        warning('This option has not been properly tested')
+        warning('This option has not been truly tested')
         opt.magnitude_mode=1;
         data.spectrum=sqrt(data.spectrum);
     end
@@ -77,6 +71,7 @@ if opt.magnitude_mode
 else
     color_n='b';
 end
+flag=opt.magnitude_mode;
 
 % this determines how far in the distribution the noise will be measure.
 % from 0.2 to 0.8...
@@ -134,6 +129,7 @@ work_sn=work_sp(find(work_sp<0),1);%negative points
 work_sp=work_sp(find(work_sp>0),1);%positive points
 
 where_cut_stat=0.5;%to avoid error....
+%opt.cutoff_position_for_noise_determination=0.8;
 if size(work_sp,1)>0
     %% addition for additional test
     if (isfield(opt,'cutoff_position_for_noise_determination'))  && ( opt.cutoff_position_for_noise_determination~=0)
@@ -141,7 +137,7 @@ if size(work_sp,1)>0
         disp(['Position of cutoff to measure SNR : ' num2str(where_cut_stat) '(Imposed)'])
         where_cut_stat_txt=[num2str(where_cut_stat*100) '%(set) '];
     else
-        where_cut_stat=determine_position_measure_SNR(work_sp,opt,plot_results_pos_optim);
+        where_cut_stat=determine_position_measure_SNR(work_sp,opt,plot_results_pos_optim,opt.magnitude_mode);
         disp(['Position of cutoff to measure SNR : ' num2str(where_cut_stat) '(optimized)'])
         where_cut_stat_txt=[num2str(where_cut_stat*100) '%(opt) '];
     end
@@ -149,23 +145,20 @@ if size(work_sp,1)>0
     %% normal program
     noise_level_initial=work_sp(round(size(work_sp,1)*where_cut_stat),1);%level of signal at half the distribution of pos signals
     
+    
     top_level=work_sp(1,1);
     list=find((work_sp-noise_level_initial)==0);
     coord_pt_nois_initial=[list(1,1) noise_level_initial ];
     coord_pt_nois_refined_neg =coord_pt_nois_initial;
     
-    if opt.magnitude_mode
-        noise_level_initial=noise_level_initial*mcfactor_noise_level_correction;
-    end
-    
     if size(work_sn,1)>0
-        noise_level_inital_neg=-work_sn(round(size(work_sn,1)*(1-where_cut_stat)),1);
-        list=size(work_sn,1)+1-find((work_sn+noise_level_inital_neg)==0);
-        coord_pt_nois_initial_neg=[list(1,1) noise_level_inital_neg ];
+        noise_level_initial_neg=-work_sn(round(size(work_sn,1)*(1-where_cut_stat)),1);
+        list=size(work_sn,1)+1-find((work_sn+noise_level_initial_neg)==0);
+        coord_pt_nois_initial_neg=[list(1,1) noise_level_initial_neg ];
         coord_pt_nois_refined_neg =coord_pt_nois_initial_neg;
-        disp(['Initial noise at ' num2str(where_cut_stat) '  pos/neg ' num2str(noise_level_initial) ' / ' num2str(noise_level_inital_neg) ])
+        disp(['Initial noise at ' num2str(where_cut_stat) '  pos/neg ' num2str(noise_level_initial) ' / ' num2str(noise_level_initial_neg) ])
     else
-        noise_level_inital_neg=0;
+        noise_level_initial_neg=0;
         disp(['Initial noise at ' num2str(where_cut_stat) ' pos (no neg) ' num2str(noise_level_initial)  ]);
     end
     
@@ -173,7 +166,7 @@ if size(work_sp,1)>0
     %signals...
     
     noise_level_pos=noise_level_initial;
-    noise_level_neg=noise_level_inital_neg;
+    noise_level_neg=noise_level_initial_neg;
     coord_pt_nois_refined  =coord_pt_nois_initial;
     if ~skip_refinement
         % ADDED FEB 12 2016 BY DJ corrected in Aug. 2017
@@ -188,13 +181,15 @@ if size(work_sp,1)>0
         if b1(1)>1
             work_sp2=work_sp(b1:end);
             noise_level_pos=work_sp2(round(size(work_sp2,1)*where_cut_stat),1);
+            
+            
             list=find((work_sp2-noise_level_pos)==0);
             coord_pt_nois_refined =[list(1,1)+b1 noise_level_pos ];
         end
         % for neg
         work_sp3=work_sn;b2=2;
         
-        [a b2]=min(abs(work_sn-how_much_higher_than_noise_are_signals*noise_level_inital_neg));
+        [a b2]=min(abs(work_sn-how_much_higher_than_noise_are_signals*noise_level_initial_neg));
         if size(b2,1)>0
             if b2(1)>1
                 work_sp3=work_sn(1:b2);
@@ -211,27 +206,24 @@ else
     noise_level_pos=0;
     noise_level_initial=noise_level_pos;
     noise_level_neg=0;
-    noise_level_inital_neg=noise_level_neg;
+    noise_level_initial_neg=noise_level_neg;
 end
 
 %% rescale to statistically relevant units
 %from stat to reach definition of noise of Bruker
 %invNorm(0.25)=-0.6744897495
 %factor_corr=-norminv((where_cut_stat)/2,0,1);%not octave compatible.
-factor_corr=-simple_norminv((where_cut_stat)/2);%simple_norminv defauls 0,1
+factor_corr=-simple_norminv((where_cut_stat)/2,flag);%simple_norminv defauls 0,1
 noise_level_initial=noise_level_initial* 1/factor_corr;
-noise_level_inital_neg=noise_level_inital_neg* 1/factor_corr;
+noise_level_initial_neg=noise_level_initial_neg* 1/factor_corr;
 %noise_level_to_plot_only=noise_level_pos* 1/factor_corr;
 if ~skip_refinement
     where_cut_stat_eff=((where_cut_stat*size(work_sp2,1))  +b1 )/(size(work_sp2,1)+b1);%this is to take into account the points ingnored for the second calculation
-    factor_corr_refined=-simple_norminv((where_cut_stat_eff)/2);
+    factor_corr_refined=-simple_norminv((where_cut_stat_eff)/2,flag);
     noise_level_pos=noise_level_pos* 1/factor_corr_refined;
-    if opt.magnitude_mode
-        noise_level_pos=noise_level_pos*mcfactor_noise_level_correction;
-    end
     
     where_cut_stat_eff=((where_cut_stat*size(work_sp3,1))  +b2 )/(size(work_sp3,1)+b2);%this is to take into account the points ingnored for the second calculation
-    factor_corr_refined=-simple_norminv((where_cut_stat_eff)/2);
+    factor_corr_refined=-simple_norminv((where_cut_stat_eff)/2,flag);
     if noise_level_neg~=0
         noise_level_neg=noise_level_neg* 1/factor_corr_refined;
     end
@@ -245,7 +237,7 @@ end
 % store data
 data_tmp.how_much_higher_than_noise_are_signals=how_much_higher_than_noise_are_signals;
 data_tmp.noise_levela=noise_level_initial;
-data_tmp.noise_levelan=noise_level_inital_neg;
+data_tmp.noise_levelan=noise_level_initial_neg;
 data_tmp.noise_leveln=noise_level_neg;
 data_tmp.noise_level=noise_level_pos;
 data_tmp.list_peaks=work_sp;
@@ -308,11 +300,11 @@ if ~isfield(opt,'take_window_function_into_account')
     opt.take_window_function_into_account=1;
 end
 %% force it when possible
-opt.take_window_function_into_account=1;
-flag=opt.magnitude_mode;
+opt.take_window_function_into_account=force_to_calculate_with_window_function;
 if ~skip_refinement
     
-        noise_array= noise_level_pos*awgn_dj(work_sp*0,0,1*flag);
+        noise_array= awgn_dj(work_sp*0,0,flag);
+        noise_array= noise_level_pos*noise_array;
         noise_array=abs(noise_array);
         noise_array=sort(noise_array,'descend');
         correction_due_to_window_function=1;
@@ -326,12 +318,12 @@ if ~skip_refinement
     end
 end
 
-    noise_array= noise_level_initial*awgn_dj(work_sp*0,0,flag);
+    noise_array= awgn_dj(work_sp*0,0,flag);
+    noise_array= noise_level_initial*noise_array;
     noise_array=abs(noise_array);
     noise_array=sort(noise_array,'descend');
     correction_due_to_window_function=1;
 %
-
 %correction_due_to_window_function=1/(1/factor_corr*lev/noise_level_initial);
 % loglog(noise,'k-','DisplayName',['Syntetic noise (pos.)']);
 if plot_results
@@ -374,7 +366,7 @@ if size(sca,2)>2
     
     % negative noise plot
     
-        noise_array= noise_level_inital_neg*awgn_dj(work_sn*0,0,flag);
+        noise_array= noise_level_initial_neg*awgn_dj(work_sn*0,0,flag);
         noise_array=abs(noise_array);
         noise_array=sort(noise_array,'descend');
         correction_due_to_window_function=1;
@@ -382,8 +374,9 @@ if size(sca,2)>2
     if plot_results
         figure(fig_number_main)
         loglog(sc_pow10,noise_array(sc_pow10),'r:','DisplayName',['N^- Initial ' ...
-            num2str(noise_level_inital_neg/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
-            num2str(noise_level_inital_neg,'%.0f')]);
+            num2str(noise_level_initial_neg/correction_due_to_window_function,'%.0f') 'x' num2str(correction_due_to_window_function,'%.2f') '=' ...
+            num2str(noise_level_initial_neg,'%.0f')]);
+
     end
 end
 
@@ -417,7 +410,17 @@ if (noise_level_pos>min(min(work_sp)) && (noise_level_pos<max(max(work_sp))))
     xpos=pos(1,1);
     if plot_results
         figure(fig_number_main)
-        loglog([1 size(work_sp,1)],[noise_level_pos noise_level_pos ],'r:','DisplayName','Noise Level');
+        loglog([1 size(work_sp,1)],[noise_level_pos noise_level_pos ],'r:','DisplayName','Noise level \fontsize{15} \sigma\fontsize{10}_N');
+        if opt.magnitude_mode
+            type_of_distribution=['\fontsize{10}Rayleigh distribution: \fontsize{15}\sigma\fontsize{10}_N = ' num2str(noise_level_pos,'%.3f') ' is the distribution parameter - NOT the stand. dev.'];
+            disp(['Rayleigh distribution of noise: Variance = (4-pi)/2*sigma^2 = (4-pi)/2*' num2str(noise_level_pos,'%.3f') '^2 = ' num2str((4-pi)/2*noise_level_pos*noise_level_pos)])
+        else
+            type_of_distribution=['\fontsize{10}Normal distribution: \fontsize{15}\sigma\fontsize{10}_N = ' num2str(noise_level_pos,'%.3f') ' is the standard deviation'];
+            disp(['Normal distribution of noise: Variance = sigma^2 = ' num2str(noise_level_pos,'%.3f') '^2 = ' num2str(noise_level_pos*noise_level_pos)])
+            
+        end
+        text(1.5,noise_level_pos,type_of_distribution,'VerticalAlignment','bottom');
+
         %   loglog(xpos*[1/1.5 1.5],noise_level*[1 1],'r:');
         %  text_noise=(['noise: 1e' num2str(log10(noise_level),'%.2f')]);
     end
@@ -428,7 +431,8 @@ if (noise_level_pos>min(min(work_sp)) && (noise_level_pos<max(max(work_sp))))
         
         % plot line remove signals for improved determination of noise.
         %   text(xpos,noise_level_pos*how_much_higher_than_noise_are_signals,['Level used to remove signal for noise determination ' num2str(how_much_higher_than_noise_are_signals) ' x Noise'],'VerticalAlignment','bottom','HorizontalAlignment','Right','interpreter','none');
-        loglog(xpos*[1/100005 1.5],noise_level_pos*[1 1]*how_much_higher_than_noise_are_signals,'m:','DisplayName',' 5xN');
+       % loglog(xpos*[1/100005 1.5],noise_level_pos*[1 1]*how_much_higher_than_noise_are_signals,'m:','DisplayName',' 5xN');
+        loglog(xpos*[1/100005 1.5],noise_level_pos*[1 1]*how_much_higher_than_noise_are_signals,'m:','DisplayName',' 5\fontsize{15}\sigma\fontsize{10}_N');
     end
 end
 
@@ -489,8 +493,12 @@ if plot_results
     set(fig,'PaperPosition',[0 0 25 15]);
     drawnow;
     %  print('-depsc','-tiff','-r600',['./Comparison_snr_' num2str(data.expname) '_' num2str(data.acquno)  '_' num2str(data.procno) '_'  '.eps']);%here
-    print('-dpdf',['.' filesep 'SAN_plot_' num2str(data.expname) '_' num2str(data.acquno)  '_' num2str(data.procno) '_'  '.pdf']);%here
-    
+    if opt.magnitude_mode
+        print('-dpdf',['.' filesep 'SAN_plot_' num2str(data.expname) '_' num2str(data.acquno)  '_' num2str(data.procno) '_' 'M'  '.pdf']);%here
+    else
+        print('-dpdf',['.' filesep 'SAN_plot_' num2str(data.expname) '_' num2str(data.acquno)  '_' num2str(data.procno) '_'  '.pdf']);%here
+        
+    end
 end
 
 end

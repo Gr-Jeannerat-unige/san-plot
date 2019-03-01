@@ -14,7 +14,9 @@ if isfield(data,'tdeff1')
 else
     tdeff1=1;
 end
+
 noise_array= awgn_dj(zeros(td1,data.td2),0);
+
 % takes into account tdeff parameters
 
 if (tdeff1>td1)
@@ -67,7 +69,7 @@ else
     noise_arrayo=(fftshift(ifft(noise_arrayo,size(data.spectrum,1),2)));
     noise_array =(fftshift(ifft(noise_array ,size(data.spectrum,1),2)));
 end
-if magnitude_mode%r = sqrt(randn(sizeOut,'like',b).^2 + randn(sizeOut,'like',b).^2) .* b;
+if magnitude_mode
     noise_arrayo=sqrt(real(noise_arrayo).^2 + imag(noise_arrayo).^2);
     noise_array =sqrt(real(noise_array ).^2 + imag(noise_array ).^2);
 else
@@ -79,7 +81,7 @@ noise_arrayo=reshape(noise_arrayo,size(noise_arrayo,1)*size(noise_arrayo,2),1);
 noise_array =reshape(noise_array ,size(noise_array ,1)*size(noise_array ,2),1);
 %   factor_corr=1;
 %factor_corr=-norminv((where_cut_stat)/2,0,1);
-factor_corr=-simple_norminv((where_cut_stat)/2);
+factor_corr=-simple_norminv((where_cut_stat)/2,magnitude_mode);
 
 noise_array =noise_array /factor_corr;
 noise_arrayo=noise_arrayo/factor_corr;
@@ -90,8 +92,8 @@ noise_arrayo=sort(noise_arrayo,'descend');
 lev =noise_array (round(size(noise_array ,1)*where_cut_stat));%norm because of taking more points with abs for non-magnitude...
 levo=noise_arrayo(round(size(noise_arrayo,1)*where_cut_stat));
 if magnitude_mode
-    lev =lev /2;
-    levo=levo/2;
+    lev =lev /1;
+    levo=levo/1;
 end
 correction_due_to_window_function=lev/levo;
 %  correction_due_to_window_function=factor_corr/levo;
@@ -99,4 +101,7 @@ pos_list=round([1:nb_pt]*(size(noise_arrayk,1)/nb_pt));
 
 noise_arrayk=noise_arrayk(pos_list,:);
 %noise_arrayk=noise_arrayk(1:nb_pt,:);
-noise_arrayk=sort(noise_arrayk,'descend')*factor_corr/levo/correction_due_to_window_function;
+noise_arrayk=sort(noise_arrayk,'descend')*factor_corr/(levo*correction_due_to_window_function);
+
+
+end
