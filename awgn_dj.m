@@ -1,5 +1,7 @@
 function y=awgn_dj(sig,reqSNR,Rayleigh)
-if nargin<3
+% using the randn function (Normally distributed random numbers)
+% sig: input may be real or complex...
+if nargin<3    % this is for data in the Magnitude mode. The distribution is different.
     Rayleigh=0;
 end
 np = 10^(-reqSNR/10);
