@@ -3,7 +3,7 @@ Software for Signal-Artifacts-Noise (SAN) plot.
 
 This repository contains:
 
-1) The program used to generate the figures of the paper : 
+1) The program used to generate the figures of the [paper](https://onlinelibrary.wiley.com/doi/full/10.1002/mrc.4882) : 
 
 program_used_to_prepare_san_paper.m (probably only works with matlab on mac)
 
